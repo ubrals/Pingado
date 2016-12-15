@@ -24,13 +24,14 @@ class Header{
 public class Block {
 	private Header header;
 	private Hash hash;
+	private Block previousBlock;
 	
 	public Block(){
 		makeBlock(header, hash);
 	}
 	
 	private void makeBlock(Header header, Hash hash) {
-		this.header = new Header(4, previousBlockHash, root, timestamp, target, nonce);
+		this.header = new Header(4, previousBlock.getHash(), new Merkle(), java.time.Instant.now().getEpochSecond(), 99L, 0L);
 		this.hash = hash;
 	}
 

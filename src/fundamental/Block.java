@@ -1,14 +1,14 @@
 package fundamental;
 
 final class Header{
-	int version; // 4 bytes
-	Hash previousBlockHash; // 32 bytes
-	Merkle root; // 32 bytes
-	long timestamp; // 4 bytes // java.time.Instant.now().getEpochSecond();
-	long target; // 4 bytes
-	long nonce; // 4 bytes
+	private int version; // 4 bytes
+	private Hash previousBlockHash; // 32 bytes
+	private Merkle root; // 32 bytes
+	private long timestamp; // 4 bytes // java.time.Instant.now().getEpochSecond();
+	private long target; // 4 bytes
+	private long nonce; // 4 bytes
 	
-	public Header(int version, Hash previousBlockHash, Merkle root, long timestamp, long target, long nonce) {
+	Header(int version, Hash previousBlockHash, Merkle root, long timestamp, long target, long nonce) {
 		this.version = version;
 		this.previousBlockHash = previousBlockHash;
 		this.root = root;
@@ -16,8 +16,19 @@ final class Header{
 		this.target = target;
 		this.nonce = nonce;
 	}
-	
-	
+	int getVersion(){ return version; };
+	Hash getPreviousBlockHash(){ return previousBlockHash; };
+	Merkle getRoot(){ return root; };
+	long getTimestamp(){ return timestamp; };
+	long getTarget(){ return target; };
+	long getNonce(){ return nonce; };
+
+	void setVersion(int version){ this.version = version; };
+	void setPreviousBlockHash(Hash previousBlockHash){ this.previousBlockHash = previousBlockHash; };
+	void setRoot(Merkle root){ this.root = root; };
+	void setTimestamp(long timestamp){ this.timestamp = timestamp; };
+	void setTarget(long target){ this.target = target; };
+	void setNonce(long nonce){ this.nonce = nonce; };
 }
 
 public class Block {
@@ -52,4 +63,11 @@ public class Block {
 		this.hash = hash;
 	}
 	
+	public int getVersion(){ return header.getVersion(); };
+	public Hash getPreviousBlockHash(){ return header.getPreviousBlockHash(); };
+	public Merkle getRoot(){ return header.getRoot(); };
+	public long getTimestamp(){ return header.getTimestamp(); };
+	public long getTarget(){ return header.getTarget(); };
+	public long getNonce(){ return header.getNonce(); };
+
 }

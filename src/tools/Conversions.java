@@ -31,4 +31,32 @@ public class Conversions {
 		
 		return retArray;
 	}
+	
+	private static long decodeHex(char num){
+		switch(num){
+		case 'a':
+		case 'A': return 10l;
+		case 'b':
+		case 'B': return 11l;
+		case 'c':
+		case 'C': return 12l;
+		case 'd':
+		case 'D': return 13l;
+		case 'e':
+		case 'E': return 14l;
+		case 'f':
+		case 'F': return 15l;
+		}
+		return Long.parseLong(String.valueOf(num));
+	}
+	public static long hexToDec(String num){
+		int len = num.length()-1;
+		long ret = 0l;
+		
+		for(int i = 0; i <= len; i++){
+			char dig = num.charAt(i);
+			ret += decodeHex(dig)*Math.pow(16, len-i);
+		}
+		return ret;
+	}
 }

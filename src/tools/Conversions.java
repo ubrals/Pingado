@@ -25,8 +25,8 @@ public class Conversions {
 			produto = dividendo / divisor;
 			resto = dividendo % divisor;
 			dividendo = produto;
-			System.out.println("prod:" + produto + " " + "resto:" + resto);
-			retArray = String.valueOf(decodeHex((int)resto)) + "." + retArray;
+//			System.out.println("prod:" + produto + " " + "resto:" + resto);
+			retArray = String.valueOf(decodeHex((int)resto)) + retArray;
 		}
 		
 		return retArray;

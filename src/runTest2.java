@@ -41,9 +41,9 @@ public class runTest2 extends runTest {
 		
 		System.out.println("");
 		System.out.println(block.getPreviousBlockHash().getHash());
-		System.out.println(engine.Sha.getSha256(block.getPreviousBlockHash().getHash()));
+		System.out.println(engine.Sha.getSha256(block.getPreviousBlockHash().getHash(), 64));
 		System.out.println("1415239972");
-		System.out.println(engine.Sha.getSha256("1415239972"));
+		System.out.println(engine.Sha.getSha256("1415239972", 64));
 		
 		int hexa = 0xb12;
 		System.out.printf("%d\n", hexa);

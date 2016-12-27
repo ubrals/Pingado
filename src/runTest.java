@@ -17,8 +17,8 @@ public class runTest {
 //		System.out.println(hexadecimal(String.valueOf(1415239972l), "UTF-8"));
 //		System.out.println(toHexString(String.valueOf(1415239972l).getBytes()));
 		System.out.println("Conversao de base");
-		System.out.println(":" + tools.Conversions.decToHex(block.getTimestamp()));
-		System.out.println(":" + tools.Conversions.decToHex(2834l));
+		System.out.println(":" + utils.Conversions.decToHex(block.getTimestamp()));
+		System.out.println(":" + utils.Conversions.decToHex(2834l));
 		System.out.println("convertido");
 	}
 	//

@@ -1,4 +1,4 @@
-package tools;
+package utils;
 
 public class Conversions {
 	private static String decodeHex(int num){

@@ -21,23 +21,23 @@ public class runTest2 extends runTest {
 		System.out.println("Conversao de base");
 		System.out.println(block.getTimestamp());
 		long timestamp = block.getTimestamp();
-		System.out.println(":" + tools.Conversions.decToHex(block.getTimestamp()));
-		String s_timestamp = tools.Conversions.decToHex(block.getTimestamp());
+		System.out.println(":" + utils.Conversions.decToHex(block.getTimestamp()));
+		String s_timestamp = utils.Conversions.decToHex(block.getTimestamp());
 		System.out.println(2834l);
-		System.out.println(":" + tools.Conversions.decToHex(2834l));
+		System.out.println(":" + utils.Conversions.decToHex(2834l));
 		System.out.println("convertido");
 		
 		System.out.println("");
 		System.out.println("b12");
-		System.out.println(tools.Conversions.hexToDec("b12"));
+		System.out.println(utils.Conversions.hexToDec("b12"));
 		System.out.println(s_timestamp);
-		System.out.println(tools.Conversions.hexToDec(s_timestamp));
+		System.out.println(utils.Conversions.hexToDec(s_timestamp));
 		
 		System.out.println("");
 		System.out.println("24d95a54");
-		System.out.println(tools.Conversions.hexToDec("24d95a54"));
+		System.out.println(utils.Conversions.hexToDec("24d95a54"));
 		System.out.println(1415239972l);
-		System.out.println(tools.Conversions.decToHex(1415239972l));
+		System.out.println(utils.Conversions.decToHex(1415239972l));
 		
 		System.out.println("");
 		System.out.println(block.getPreviousBlockHash().getHash());

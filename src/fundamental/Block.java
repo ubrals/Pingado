@@ -3,8 +3,8 @@ package fundamental;
 import static engine.Sha.getSha256;
 
 public class Block {
-	final class Header{
-		private int version; // 4 bytes
+	private final class Header{
+		private int version = 4; // 4 bytes
 		private String previousBlockHash; // 32 bytes
 		private String root; // 32 bytes
 		private long timestamp; // 4 bytes // java.time.Instant.now().getEpochSecond();
@@ -77,7 +77,6 @@ public class Block {
 	private Block previousBlock;
 	
 	public Block(){
-		//makeBlock(header, hash);
 	}
 	
 	public Block(int version, String previousBlockHash, String merkleRootHash, long timestamp, long nBits, long nonce, Block previousBlock) {

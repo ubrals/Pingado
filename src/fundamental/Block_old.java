@@ -42,7 +42,7 @@ public class Block_old {
 	
 	public Block_old(int version, String previousBlockHash, String merkleRootHash, long timestamp, long nBits, long nonce, String thisHashHash, Block_old previousBlock) {
 		Hash hash = new Hash();        hash.setHash(previousBlockHash);
-		Merkle merkle = new Merkle();  hash.setHash(merkleRootHash); merkle.setHash(hash);
+		Merkle merkle = new Merkle();  hash.setHash(merkleRootHash); //merkle.setHash(hash);
 		Header header = new Header(version, hash, merkle, timestamp, nBits, nonce);
 		Hash thisHash = new Hash(); thisHash.setHash(thisHashHash);
 		this.header = header;
@@ -76,7 +76,7 @@ public class Block_old {
 			 + "  version : " + this.getVersion() + "\n"
 		     + "  this block hash : " + this.getHash().getHash() + "\n"
 		     + "  prev block hash : " + this.getPreviousBlockHash().getHash() + "\n"
-		     + "  merkle root hash : " + this.getRoot().getHash().getHash() + "\n"
+		     + "  merkle root hash : " + this.getRoot().getHash() + "\n"
 		     + "  timestamp : " + this.getTimestamp() + "\n"
 		     + "  nBits : " + this.getNbits() + "\n"
 		     + "  nonce : " + this.getNonce() + "\n"

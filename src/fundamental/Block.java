@@ -1,85 +1,131 @@
 package fundamental;
 
-final class Header{
-	private int version; // 4 bytes
-	private Hash previousBlockHash; // 32 bytes
-	private Merkle root; // 32 bytes
-	private long timestamp; // 4 bytes // java.time.Instant.now().getEpochSecond();
-	private long nBits; // 4 bytes
-	private long nonce; // 4 bytes
-	
-	Header(int version, Hash previousBlockHash, Merkle root, long timestamp, long nBits, long nonce) {
-		this.version = version;
-		this.previousBlockHash = previousBlockHash;
-		this.root = root;
-		this.timestamp = timestamp;
-		this.nBits = nBits;
-		this.nonce = nonce;
-	}
-	int getVersion(){ return version; };
-	Hash getPreviousBlockHash(){ return previousBlockHash; };
-	Merkle getRoot(){ return root; };
-	long getTimestamp(){ return timestamp; };
-	long getNbits(){ return nBits; };
-	long getNonce(){ return nonce; };
-
-	void setVersion(int version){ this.version = version; };
-	void setPreviousBlockHash(Hash previousBlockHash){ this.previousBlockHash = previousBlockHash; };
-	void setRoot(Merkle root){ this.root = root; };
-	void setTimestamp(long timestamp){ this.timestamp = timestamp; };
-	void setNbits(long nBits){ this.nBits = nBits; };
-	void setNonce(long nonce){ this.nonce = nonce; };
-}
+import static engine.Sha.getSha256;
 
 public class Block {
+	final class Header{
+		private int version; // 4 bytes
+		private String previousBlockHash; // 32 bytes
+		private String root; // 32 bytes
+		private long timestamp; // 4 bytes // java.time.Instant.now().getEpochSecond();
+		private long nBits; // 4 bytes
+		private long nonce; // 4 bytes
+		
+		Header(int version, String previousBlockHash, String root, long timestamp, long nBits, long nonce) {
+			this.setVersion(version);
+			this.setPreviousBlockHash(previousBlockHash);
+			this.setRoot(root);
+			this.setTimestamp(timestamp);
+			this.setnBits(nBits);
+			this.setNonce(nonce);
+		}
+
+		private int getVersion() {
+			return version;
+		}
+
+		public void setVersion(int version) {
+			this.version = version;
+		}
+
+		public String getPreviousBlockHash() {
+			return previousBlockHash;
+		}
+
+		public void setPreviousBlockHash(String previousBlockHash) {
+			this.previousBlockHash = previousBlockHash;
+		}
+
+		public String getRoot() {
+			return root;
+		}
+
+		public void setRoot(String root) {
+			this.root = root;
+		}
+
+		public long getTimestamp() {
+			return timestamp;
+		}
+
+		public void setTimestamp(long timestamp) {
+			this.timestamp = timestamp;
+		}
+
+		public long getnBits() {
+			return nBits;
+		}
+
+		public void setnBits(long nBits) {
+			this.nBits = nBits;
+		}
+
+		public long getNonce() {
+			return nonce;
+		}
+
+		public void setNonce(long nonce) {
+			this.nonce = nonce;
+		}
+		
+	}
+	
+	////////
+	// Block
 	private Header header;
-	private Hash hash;
+	private String hash;
 	private Block previousBlock;
 	
 	public Block(){
 		//makeBlock(header, hash);
 	}
 	
-	public Block(int version, String previousBlockHash, String merkleRootHash, long timestamp, long nBits, long nonce, String thisHashHash, Block previousBlock) {
-		Hash hash = new Hash();        hash.setHash(previousBlockHash);
-		Merkle merkle = new Merkle();  hash.setHash(merkleRootHash); merkle.setHash(hash);
-		Header header = new Header(version, hash, merkle, timestamp, nBits, nonce);
-		Hash thisHash = new Hash(); thisHash.setHash(thisHashHash);
+	public Block(int version, String previousBlockHash, String merkleRootHash, long timestamp, long nBits, long nonce, Block previousBlock) {
+		String prevhash = previousBlockHash;
+		String merkle = merkleRootHash;
+		Header header = new Header(version, previousBlockHash, merkle, timestamp, nBits, nonce);
 		this.header = header;
-		this.hash = thisHash;
+		this.hash = makeHash();
 		this.previousBlock = previousBlock;
 	}
-	
-//	private void makeBlock(Header header, Hash hash) {
-//		this.header = new Header(4, previousBlock.getHash(), new Merkle(), java.time.Instant.now().getEpochSecond(), 99L, 0L);
-//		this.hash = hash;
-//	}
-
-	public Hash getHash() {
-		return hash;
-	}
-
-	public void setHash(Hash hash) {
-		this.hash = hash;
+	private String makeHash(){
+		String concatHeader = header.version + header.previousBlockHash + header.root + header.timestamp + header.nBits + header.nonce;
+		String hashed = getSha256(getSha256(concatHeader, 64), 64);
+		return hashed;
 	}
 	
-	public int    getVersion(){ return header.getVersion(); };
-	public Hash   getPreviousBlockHash(){ return header.getPreviousBlockHash(); };
-	public Merkle getRoot(){ return header.getRoot(); };
-	public long   getTimestamp(){ return header.getTimestamp(); };
-	public long   getNbits(){ return header.getNbits(); };
-	public long   getNonce(){ return header.getNonce(); };
-	
+	public int getVersion(){
+		return header.getVersion();
+	}
+	public String getPreviousBlockHash(){
+		return header.getPreviousBlockHash();
+	}
+	public String getRoot(){
+		return header.getRoot();
+	}
+	public long getTimestamp(){
+		return header.getTimestamp();
+	}
+	public long getNbits(){
+		return header.getnBits();
+	}
+	public long getNonce(){
+		return header.getNonce();
+	}
+	public String getHash(){
+		return this.hash;
+	}
 	@Override
 	public String toString(){
-		return "Block {"
+		return "Block {" + "\n"
 			 + "  version : " + this.getVersion() + "\n"
-		     + "  this block hash : " + this.getHash().getHash() + "\n"
-		     + "  prev block hash : " + this.getPreviousBlockHash().getHash() + "\n"
-		     + "  merkle root hash : " + this.getRoot().getHash().getHash() + "\n"
+		     + "  this block hash   : " + this.getHash() + "\n"
+		     + "  prev block hash   : " + this.getPreviousBlockHash() + "\n"
+		     + "  merkle root hash  : " + this.getRoot() + "\n"
 		     + "  timestamp : " + this.getTimestamp() + "\n"
 		     + "  nBits : " + this.getNbits() + "\n"
 		     + "  nonce : " + this.getNonce() + "\n"
 		     + "}";
 	}
+
 }

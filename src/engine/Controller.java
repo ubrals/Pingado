@@ -1,13 +1,13 @@
 package engine;
 
 import fundamental.Hash;
-import fundamental.Block;
+import fundamental.Block_old;
 
 public class Controller {
-	private Block newBlock;
-	private Block previousBlock;
+	private Block_old newBlock;
+	private Block_old previousBlock;
 		
-	public Block getNewBlock() {
+	public Block_old getNewBlock() {
 		return newBlock;
 	}
 
@@ -17,7 +17,7 @@ public class Controller {
 	}
 	
 	private void setNewBlock() {
-		this.newBlock = new Block();
+		this.newBlock = new Block_old();
 		
 		signBlock();
 		

@@ -1,11 +1,11 @@
 import java.math.BigInteger;
 
-import fundamental.Block;
+import fundamental.Block_old;
 
 public class runTest2 extends runTest {
 
 	public static void main(String[] args) {
-		Block block = new Block(4, "1aef899acd834", "278ef9340cfd7b", java.time.Instant.now().getEpochSecond(), 938938l, 0l, "1000aaabb", new Block());
+		Block_old block = new Block_old(4, "1aef899acd834", "278ef9340cfd7b", java.time.Instant.now().getEpochSecond(), 938938l, 0l, "1000aaabb", new Block_old());
 		
 //		System.out.println("Format");
 //		System.out.println(block.getTimestamp());

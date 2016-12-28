@@ -1,12 +1,12 @@
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
-import fundamental.Block;
+import fundamental.Block_old;
 
 public class runTest {
 
 	public static void main(String[] args) throws Exception {
-		Block block = new Block(4, "1aef899acd834", "278ef9340cfd7b", java.time.Instant.now().getEpochSecond(), 938938l, 0l, "1000aaabb", new Block());
+		Block_old block = new Block_old(4, "1aef899acd834", "278ef9340cfd7b", java.time.Instant.now().getEpochSecond(), 938938l, 0l, "1000aaabb", new Block_old());
 		
 		System.out.println(String.format("%h", new BigInteger(1, block.getHash().getHash().getBytes())));
 		System.out.println(String.format("%h", new BigInteger(1, String.valueOf(block.getTimestamp()).getBytes())));

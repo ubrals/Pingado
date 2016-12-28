@@ -1,7 +1,7 @@
-import fundamental.Block;
+import fundamental.Block_old;
 import static engine.Sha.getSha256;
 
-public class runTeste4 {
+public class runTest4 {
 
 	public static void main(String[] args) {
 		String hash_merkle = getSha256(getSha256("merkle_root", 64), 64);
@@ -21,8 +21,8 @@ public class runTeste4 {
 		long nonce_bloco1 = 5361109999l;
 		long nBits_bloco2 = 5361109000l;
 		long nonce_bloco2 = 5361108999l;
-		Block block1 = new Block(4, hash_bloco0, hash_merkle, ts_bloco1, nBits_bloco1, nonce_bloco1, hash_bloco1, null);
-		Block block2 = new Block(4, hash_bloco1, hash_merkle, ts_bloco2, nBits_bloco2, nonce_bloco2, hash_bloco2, block1);
+		Block_old block1 = new Block_old(4, hash_bloco0, hash_merkle, ts_bloco1, nBits_bloco1, nonce_bloco1, hash_bloco1, null);
+		Block_old block2 = new Block_old(4, hash_bloco1, hash_merkle, ts_bloco2, nBits_bloco2, nonce_bloco2, hash_bloco2, block1);
 		
 		System.out.println("block1" + block1.toString());
 	}

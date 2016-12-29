@@ -1,12 +1,25 @@
 package fundamental;
 
-import static engine.Sha.getSha256;
+import static utils.Sha.getSha256;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Merkle {
+	/*****
+	 * 
+	 * @author ubrals
+	 * {@link} https://bitcoin.org/en/developer-reference#merkle-trees
+	 * Merkle tree that hold the transactions in the block
+	 *
+	 */
 	private class Header{
+		/*****
+		 * 
+		 * @author ubrals
+		 * Input and Output were set as nested classes in order to(como é que chama aquela porra de APD3 mesmo?!??!)
+		 * and encapsulation.
+		 */
 		private class Input {
 			private String previousOutput[] = new String[2];
 			private String outpoint[] = new String[2]; // [1]: 32 bytes TXID; [2]: 4 bytes output index (vout)
@@ -75,6 +88,14 @@ public class Merkle {
 			
 		}
 		
+		/*****
+		 * @param version // class' default is 1
+		 * @param tx_in_count // count of input transactions
+		 * @param tx_in // every input transaction within the block
+		 * @param tx_out_count // count of output transactions
+		 * @param tx_out // every output transaction within the block
+		 * @param lock_time // timestamp
+		 */
 		private int version = 1; // 4 bytes
 		private int tx_in_count;
 		private List<Input> tx_in = new ArrayList<Input>();

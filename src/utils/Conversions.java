@@ -59,4 +59,27 @@ public class Conversions {
 		}
 		return ret;
 	}
+	
+	public static String byteToString(byte[] bytes){
+		String str = "";
+		for(byte b : bytes)
+			str += (char)b;
+		return str;
+	}
+	
+	public static int byteToArrayInt(byte[] bytes){
+		String str = "";
+		for(byte b : bytes)
+			str += (char)b;
+		return Integer.parseInt(str);
+	}
+	
+	public byte[] stringToByte(String str){
+		byte bytes[] = new byte[str.length()];
+		
+		for(int i=0; i<str.length(); i++){
+			bytes[i] = (byte) str.charAt(i);
+		}
+		return bytes;
+	}
 }

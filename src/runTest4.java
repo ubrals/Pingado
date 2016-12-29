@@ -1,5 +1,6 @@
+import static utils.Sha.getSha256;
+
 import fundamental.Block_old;
-import static engine.Sha.getSha256;
 
 public class runTest4 {
 

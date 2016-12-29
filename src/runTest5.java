@@ -1,4 +1,4 @@
-import static engine.Sha.getSha256;
+import static utils.Sha.getSha256;
 
 import fundamental.Block;
 

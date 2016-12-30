@@ -24,5 +24,7 @@ public class Transaction {
 		this.satoshis = satoshis;
 	}
 	
-	
+	public String toMakeHash(){
+		return this.getTxid() + this.getSatoshis();
+	}
 }

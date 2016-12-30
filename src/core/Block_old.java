@@ -1,4 +1,4 @@
-package fundamental;
+package core;
 
 final class Header{
 	private int version; // 4 bytes

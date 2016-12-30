@@ -1,7 +1,7 @@
 package engine;
 
-import fundamental.Hash;
-import fundamental.Block_old;
+import core.Block_old;
+import core.Hash;
 
 public class Controller {
 	private Block_old newBlock;

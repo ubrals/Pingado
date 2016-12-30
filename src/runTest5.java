@@ -1,6 +1,6 @@
 import static utils.Sha.getSha256;
 
-import fundamental.Block;
+import core.Block;
 
 public class runTest5 {
 

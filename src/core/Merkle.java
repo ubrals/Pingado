@@ -1,4 +1,4 @@
-package fundamental;
+package core;
 
 import static utils.Sha.getSha256;
 
@@ -35,7 +35,14 @@ public class Merkle {
 			
 			private Input(){
 			}
-
+			
+			private Input(String previousOutput[], String outpoint[], String scriptSig, int sequenceNumber){
+				this.setPreviousOutput(previousOutput);
+				this.setOutpoint(outpoint);
+				this.setScriptSig(scriptSig);
+				this.setSequenceNumber(sequenceNumber);
+			}
+			
 			private String[] getPreviousOutput() {
 				return previousOutput;
 			}
@@ -84,7 +91,12 @@ public class Merkle {
 			
 			public Output(){
 			}
-
+			
+			public Output(double satoshis, String scriptPubKey){
+				this.setSatoshis(satoshis);
+				this.setScriptPubKey(scriptPubKey);
+			}
+			
 			public double getSatoshis() {
 				return satoshis;
 			}
@@ -126,6 +138,11 @@ public class Merkle {
 		private long lock_time;
 		
 		public Header(){
+		}
+		
+		public Header(int version, int tx_in_count){
+			Input input = new Input(new String[] {"a", "b"}, new String[] {"c", "d"}, "pubkey", 0);
+			Output output = new Output()
 		}
 
 		private int getVersion() {
@@ -205,6 +222,11 @@ public class Merkle {
 	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
 	public Merkle(){
+	}
+	
+	public Merkle(){
+		Header header = new Header()
+		
 	}
 	
 	public String getHash() {

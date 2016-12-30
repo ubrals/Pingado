@@ -1,7 +1,7 @@
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
-import fundamental.Block_old;
+import core.Block_old;
 
 public class runTest {
 

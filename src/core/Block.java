@@ -1,4 +1,4 @@
-package fundamental;
+package core;
 
 import static utils.Sha.getSha256;
 

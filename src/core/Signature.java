@@ -1,4 +1,4 @@
-package fundamental;
+package core;
 
 public class Signature {
 

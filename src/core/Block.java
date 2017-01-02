@@ -29,7 +29,7 @@ public class Block {
 		 * @param nBits
 		 * @param nonce
 		 */
-		Header(int version, String previousBlockHash, String root, long timestamp, long nBits, long nonce) {
+		Header(String previousBlockHash, String root, long timestamp, long nBits, long nonce) {
 			this.setVersion(version);
 			this.setPreviousBlockHash(previousBlockHash);
 			this.setRoot(root);
@@ -116,8 +116,8 @@ public class Block {
 	 * @param previousBlock
 	 * 
 	 */
-	public Block(int version, String previousBlockHash, String merkleRootHash, long timestamp, long nBits, long nonce, Block previousBlock) {
-		Header header = new Header(version, previousBlockHash, merkleRootHash, timestamp, nBits, nonce);
+	public Block(String previousBlockHash, String merkleRootHash, long timestamp, long nBits, long nonce, Block previousBlock) {
+		Header header = new Header(previousBlockHash, merkleRootHash, timestamp, nBits, nonce);
 		this.header = header;
 		this.hash = makeHash();
 		this.previousBlock = previousBlock;

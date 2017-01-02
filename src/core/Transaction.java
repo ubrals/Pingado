@@ -3,11 +3,16 @@ package core;
 public class Transaction {
 	String txid;
 	double satoshis;
+	byte coinbase[] = new byte[100];
 	
 	public Transaction() {
-		super();
 	}
-
+	
+	public Transaction(String txid, double satoshis){
+		this.setTxid(txid);
+		this.setSatoshis(satoshis);
+	}
+	
 	public String getTxid() {
 		return txid;
 	}
@@ -24,6 +29,13 @@ public class Transaction {
 		this.satoshis = satoshis;
 	}
 	
+	public byte[] getCoinbase() {
+		return coinbase;
+	}
+	
+	public void setCoinbase(byte[] coinbase) {
+		this.coinbase = coinbase;
+	}
 	public String toMakeHash(){
 		return this.getTxid() + this.getSatoshis();
 	}

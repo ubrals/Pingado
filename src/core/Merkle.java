@@ -140,9 +140,10 @@ public class Merkle {
 		public Header(){
 		}
 		
-		public Header(int version, int tx_in_count){
-			Input input = new Input(new String[] {"a", "b"}, new String[] {"c", "d"}, "pubkey", 0);
-			Output output = new Output()
+		public Header(int version){
+			this.setVersion(version);
+			Input input = new Input(new String[] {"", ""}, new String[] {"", ""}, "", 1);
+			Output output = new Output(1.0, "");
 		}
 
 		private int getVersion() {
@@ -157,32 +158,30 @@ public class Merkle {
 			return tx_in_count;
 		}
 
-		private void setTx_in_count(int tx_in_count) {
-			this.tx_in_count = tx_in_count;
-		}
-
 		private List<Input> getTx_in() {
 			return tx_in;
 		}
-
-		private void setTx_in(List<Input> tx_in) {
-			this.tx_in = tx_in;
+		
+		private void addTx_in(String s_satoshis, String pubkeyScriptSig, String txid, String vout_index, String scriptSig){
+			Input tx_in = new Input(new String[] { s_satoshis, pubkeyScriptSig }
+			                       ,new String[] { txid , vout_index}
+			                       , scriptSig
+			                       , 1);
+			this.tx_in.add(tx_in);
+			this.tx_in_count ++;
 		}
-
+		
 		private int getTx_out_count() {
 			return tx_out_count;
 		}
 
-		private void setTx_out_count(int tx_out_count) {
-			this.tx_out_count = tx_out_count;
+		private void addTx_out(Output tx_out){
+			this.tx_out.add(tx_out);
+			this.tx_out_count ++;
 		}
-
+		
 		private List<Output> getTx_out() {
 			return tx_out;
-		}
-
-		private void setTx_out(List<Output> tx_out) {
-			this.tx_out = tx_out;
 		}
 
 		private long getLock_time() {
@@ -222,10 +221,7 @@ public class Merkle {
 	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
 	public Merkle(){
-	}
-	
-	public Merkle(){
-		Header header = new Header()
+		Header header = new Header();
 		
 	}
 	
@@ -251,4 +247,11 @@ public class Merkle {
 		return hashed;
 	}
 	
+	public void addTransaction(Transaction transaction){
+		this.transactions.add(transaction);
+	}
+	
+	public void addInput(String s_satoshis, String pubkeyScriptSig, String txid, String vout_index, String scriptSig){
+		header.addTx_in(s_satoshis, pubkeyScriptSig, txid, vout_index, scriptSig);
+	}
 }

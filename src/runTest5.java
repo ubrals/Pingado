@@ -27,9 +27,9 @@ public class runTest5 {
 		long nonce_bloco2 = 5361108999l;
 		Block block0 = new Block();
 		hash_bloco0 = getSha256(getSha256(hash_bloco0, 64), 64);
-		Block block1 = new Block(4, hash_bloco0, hash_merkle, ts_bloco1, nBits_bloco1, nonce_bloco1, block0);
+		Block block1 = new Block(hash_bloco0, hash_merkle, ts_bloco1, nBits_bloco1, nonce_bloco1, block0);
 		hash_bloco1 = block1.getHash();
-		Block block2 = new Block(4, hash_bloco1, hash_merkle, ts_bloco2, nBits_bloco2, nonce_bloco2, block1);
+		Block block2 = new Block(hash_bloco1, hash_merkle, ts_bloco2, nBits_bloco2, nonce_bloco2, block1);
 		hash_bloco2 = block2.getHash();
 		System.out.println("block1 " + block1.toString());
 		System.out.println("block2 " + block2.toString());

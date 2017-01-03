@@ -50,5 +50,12 @@ public class runTest8 {
         for(byte bk : key){
             System.out.print((char)(bk & 0xff) + " ");
         }
+        System.out.println();
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println();
+        System.out.println("Satoshis: " + Conversions.hexToDecInternalByteOrder("f0ca052a01000000") + " BTC");
+        System.out.println("Satoshis: " + String.valueOf(Conversions.hexToDecInternalByteOrder("f0ca052a01000000")) + " BTC");
+        System.out.print  ("Satoshis: " + Conversions.left(String.valueOf(Conversions.hexToDecInternalByteOrder("f0ca052a01000000")), 2) + ".");
+        System.out.println(Conversions.right(String.valueOf(Conversions.hexToDecInternalByteOrder("f0ca052a01000000")), 8) + " BTC");
 	}
 }

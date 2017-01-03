@@ -95,7 +95,7 @@ public class Conversions {
 		for(int r=len; r>0; r-=2){
 			rev += String.valueOf((char)num.charAt(r-1)) + String.valueOf((char)num.charAt(r));
 		}
-		System.out.println(rev + " " + num);
+//		System.out.println(rev + " " + num);
 		for(int i = 0; i <= len; i++){
 			char dig = rev.charAt(i);
 			ret += decodeHex(dig)*Math.pow(16, len-i);
@@ -129,4 +129,24 @@ public class Conversions {
 		}
 		return bytes;
 	}
+	
+	public static String right(String word, int count){
+	    String ret = "";
+	    int len = word.length();
+	    for(int i=0; i<count; i++){
+	        ret = String.valueOf(word.charAt(len-1-i)) + ret;
+	    }
+	    
+	    return ret;
+	}
+	
+    public static String left(String word, int count){
+        String ret = "";
+        int len = word.length();
+        for(int i=0; i<count; i++){
+            ret = ret + String.valueOf(word.charAt(i));
+        }
+        
+        return ret;
+    }
 }

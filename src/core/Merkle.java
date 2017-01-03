@@ -14,12 +14,13 @@ public class Merkle {
 	 *
 	 */
 //////////////
+// TODO: remove Header from Merkle
 // Header
 	private class Header{
 		/*****
 		 * 
 		 * @author ubrals
-		 * Block's header was set to be a nested and private class, in order to (como é que chama aquela porra de APD3 mesmo?!??!)
+		 * Transaction's header was set to be a nested and private class, in order to (como é que chama aquela porra de APD3 mesmo?!??!)
 		 * and encapsulation.
 		 * 
 		 * Input and Output were set as nested classes in order to(como é que chama aquela porra de APD3 mesmo?!??!)

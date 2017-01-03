@@ -2,7 +2,7 @@ package core;
 
 import static utils.Sha.getSha256;
 
-public class Block {
+public class Block_String {
 	/*****
 	 * 
 	 * @author ubrals
@@ -12,12 +12,13 @@ public class Block {
 	 * 
 	 */
 	private final class Header{
-		private byte[] version = {50,(Byte) null,(Byte) null,(Byte) null}; // 4 bytes
-		private byte[] previousBlockHash = new byte[32]; // 32 bytes
-		private byte[] merkleRootHash = new byte[32];
-		private byte[] timestamp = new byte[4]; // 4 bytes // java.time.Instant.now().getEpochSecond();
-		private byte[] nBits = new byte[4]; // 4 bytes
-		private byte[] nonce = new byte[4]; // 4 bytes
+		private int version = 4; // 4 bytes
+		private String previousBlockHash; // 32 bytes
+		private String root; // 32 bytes
+//		private Merkle merkleRoot; // TODO: Refactor to make root a Merkle class
+		private long timestamp; // 4 bytes // java.time.Instant.now().getEpochSecond();
+		private long nBits; // 4 bytes
+		private long nonce; // 4 bytes
 		
 		/******
 		 * 
@@ -96,12 +97,12 @@ public class Block {
 	 */
 	private Header header;
 	private String hash;
-	private Block previousBlock;
+	private Block_String previousBlock;
 	
 	/*****
 	 * Default constructor
 	 */
-	public Block(){
+	public Block_String(){
 	}
 	
 	/*****
@@ -115,7 +116,7 @@ public class Block {
 	 * @param previousBlock
 	 * 
 	 */
-	public Block(String previousBlockHash, String merkleRootHash, long timestamp, long nBits, long nonce, Block previousBlock) {
+	public Block_String(String previousBlockHash, String merkleRootHash, long timestamp, long nBits, long nonce, Block_String previousBlock) {
 		Header header = new Header(previousBlockHash, merkleRootHash, timestamp, nBits, nonce);
 		this.header = header;
 		this.hash = makeHash();

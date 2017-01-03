@@ -44,4 +44,28 @@ public class Sha {
 		}
 		return result.toString();
 	}
+	
+	public static String getSha256InternalByteOrder(String value, int len) {
+		try{
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			md.update(value.getBytes());
+			return bytesToHexInternalByteOrder(md.digest(), len);
+			}
+		 catch(Exception ex){
+			 throw new RuntimeException(ex);
+			 }
+	}
+
+	private static String bytesToHexInternalByteOrder(final byte[] bytes, int len) {
+        char[] hexChars = new char[bytes.length * 2];
+        final char[] hexArray = "0123456789abcdef".toCharArray();
+        
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+
+        return new String(hexChars);
+    }
 }

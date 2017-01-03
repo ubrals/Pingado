@@ -31,6 +31,33 @@ public class Conversions {
 		
 		return retArray;
 	}
+	public static String decToHexInternalByteOrder(long num){
+		long dividendo = num,
+			 divisor = 16l,
+			 produto = 0l,
+			 resto = num;
+		String retArray = "";
+		int db=0;
+		String dch = "";
+		
+		//produto = dividendo / divisor;
+		while(dividendo % divisor > 0l){
+			produto = dividendo / divisor;
+			resto = dividendo % divisor;
+			dividendo = produto;
+//			System.out.println("prod:" + produto + " " + "resto:" + resto);
+			dch = String.valueOf(decodeHex((int)resto)) + dch;
+			db++;
+//			retArray = retArray + String.valueOf(decodeHex((int)resto));
+			if(db == 2){
+				retArray = retArray + dch;
+				db = 0;
+				dch = "";
+			}
+		}
+		
+		return retArray;
+	}
 	
 	private static long decodeHex(char num){
 		switch(num){
@@ -59,22 +86,42 @@ public class Conversions {
 		}
 		return ret;
 	}
+	public static long hexToDecInternalByteOrder(String num){
+		int len = num.length()-1;
+		long ret = 0l;
+		int ub = 0;
+		String rev = "";
+		
+		for(int r=len; r>0; r-=2){
+			rev += String.valueOf((char)num.charAt(r-1)) + String.valueOf((char)num.charAt(r));
+		}
+		System.out.println(rev + " " + num);
+		for(int i = 0; i <= len; i++){
+			char dig = rev.charAt(i);
+			ret += decodeHex(dig)*Math.pow(16, len-i);
+		}
+		return ret;
+	}
 	
 	public static String byteToString(byte[] bytes){
 		String str = "";
 		for(byte b : bytes)
-			str += (char)b;
+			str += (char)(b & 0xff);
 		return str;
 	}
 	
-	public static int byteToArrayInt(byte[] bytes){
-		String str = "";
-		for(byte b : bytes)
-			str += (char)b;
-		return Integer.parseInt(str);
+	public static int[] byteToArrayInt(byte[] bytes){
+//		String str = "";
+		int array[] = new int[bytes.length];
+		int i = 0;
+		for(byte b : bytes){
+//			str += (char)b;
+			array[i++] = (b & 0xff);
+		}
+		return array;
 	}
 	
-	public byte[] stringToByte(String str){
+	public static byte[] stringToByte(String str){
 		byte bytes[] = new byte[str.length()];
 		
 		for(int i=0; i<str.length(); i++){

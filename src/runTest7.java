@@ -1,6 +1,6 @@
 import static utils.Sha.getSha256;
 
-import core.Block;
+import core.Block_String;
 import core.Merkle;
 import core.Transaction;
 import static utils.Coinbase.generateCoinbase;
@@ -8,7 +8,7 @@ import static utils.Coinbase.generateCoinbase;
 public class runTest7 {
 
 	public static void main(String[] args) {
-		Block block0;
+		Block_String block0;
 		Merkle merkle_root;
 		Transaction transaction1;
 		
@@ -34,7 +34,7 @@ public class runTest7 {
 		long nonce_bloco1 = 5361109999l;
 		long nonce_bloco2 = 5361108999l;
 		
-		block0 = new Block();
+		block0 = new Block_String();
 	}
 
 }

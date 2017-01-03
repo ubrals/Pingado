@@ -1,4 +1,7 @@
-package core;
+package deprecated;
+
+import core.Hash;
+import core.Merkle;
 
 final class Header{
 	private int version; // 4 bytes

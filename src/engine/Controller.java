@@ -1,7 +1,7 @@
 package engine;
 
-import core.Block_old;
 import core.Hash;
+import deprecated.Block_old;
 
 public class Controller {
 	private Block_old newBlock;

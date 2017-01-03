@@ -1,4 +1,4 @@
-package core;
+package deprecated;
 
 import static utils.Sha.getSha256;
 

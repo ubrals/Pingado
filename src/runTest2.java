@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-import core.Block_old;
+import deprecated.Block_old;
 
 public class runTest2 extends runTest {
 

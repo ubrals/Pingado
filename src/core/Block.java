@@ -1,6 +1,7 @@
 package core;
 
 import static utils.Sha.getSha256;
+import static utils.Conversions.*;
 
 public class Block {
 	/*****
@@ -23,65 +24,65 @@ public class Block {
 		 * 
 		 * @param version // class' default is 4
 		 * @param previousBlockHash
-		 * @param root
+		 * @param merkleRootHash
 		 * @param timestamp
 		 * @param nBits
 		 * @param nonce
 		 */
-		Header(String previousBlockHash, String root, long timestamp, long nBits, long nonce) {
+		Header(byte[] previousBlockHash, byte[] merkleRootHash, byte[] timestamp, byte[] nBits, byte[] nonce) {
 			this.setVersion(version);
 			this.setPreviousBlockHash(previousBlockHash);
-			this.setRoot(root);
+			this.setMerkleRootHash(merkleRootHash);
 			this.setTimestamp(timestamp);
 			this.setnBits(nBits);
 			this.setNonce(nonce);
 		}
 
-		private int getVersion() {
+		private byte[] getVersion() {
 			return version;
 		}
 
-		public void setVersion(int version) {
+		public void setVersion(byte[] version) {
 			this.version = version;
 		}
 
-		public String getPreviousBlockHash() {
+		public byte[] getPreviousBlockHash() {
 			return previousBlockHash;
 		}
 
-		public void setPreviousBlockHash(String previousBlockHash) {
+		public void setPreviousBlockHash(byte[] previousBlockHash) {
 			this.previousBlockHash = previousBlockHash;
 		}
 
-		public String getRoot() {
-			return root;
+		public byte[] getMerkleRootHash() {
+			return merkleRootHash;
 		}
 
-		public void setRoot(String root) {
-			this.root = root;
+		public void setMerkleRootHash(byte[] merkleRootHash) {
+			this.merkleRootHash = merkleRootHash;
 		}
 
-		public long getTimestamp() {
+		public byte[] getTimestamp() {
 			return timestamp;
 		}
 
-		public void setTimestamp(long timestamp) {
+		public void setTimestamp(byte[] timestamp) {
 			this.timestamp = timestamp;
 		}
 
-		public long getnBits() {
+		public byte[] getnBits() {
 			return nBits;
 		}
 
-		public void setnBits(long nBits) {
+		public void setnBits(byte[] nBits) {
 			this.nBits = nBits;
 		}
 
-		public long getNonce() {
+		public byte[] getNonce() {
 			return nonce;
 		}
 
-		public void setNonce(long nonce) {
+		public void setNonce(byte[] nonce) {
 			this.nonce = nonce;
 		}
 		
@@ -95,7 +96,7 @@ public class Block {
 	 *                      // TODO: Refactor and remove
 	 */
 	private Header header;
-	private String hash;
+	private byte[] hash = new byte[32];
 	private Block previousBlock;
 	
 	/*****
@@ -115,57 +116,61 @@ public class Block {
 	 * @param previousBlock
 	 * 
 	 */
-	public Block(String previousBlockHash, String merkleRootHash, long timestamp, long nBits, long nonce, Block previousBlock) {
+	public Block(byte[] previousBlockHash, byte[] merkleRootHash, byte[] timestamp, byte[] nBits, byte[] nonce, Block previousBlock) {
 		Header header = new Header(previousBlockHash, merkleRootHash, timestamp, nBits, nonce);
 		this.header = header;
 		this.hash = makeHash();
 		this.previousBlock = previousBlock;
 	}
-	private String makeHash(){
-		String concatHeader = header.version + header.previousBlockHash + header.root + header.timestamp + header.nBits + header.nonce;
+    private byte[] makeHash(){
+        String concatHeader = byteToString(header.getVersion())
+                            + byteToString(header.getPreviousBlockHash())
+                            + byteToString(header.getMerkleRootHash())
+                            + byteToString(header.getTimestamp())
+                            + byteToString(header.getnBits())
+                            + byteToString(header.getNonce());
 		String hashed = getSha256(getSha256(concatHeader, 64), 64);
-		return hashed;
+		return stringToByte(hashed);
 	}
 	
-	public int getVersion(){
+	public byte[] getVersion(){
 		return header.getVersion();
 	}
 	
-	public String getPreviousBlockHash(){
+	public byte[] getPreviousBlockHash(){
 		return header.getPreviousBlockHash();
 	}
 	
-	public String getRoot(){
-		return header.getRoot();
+	public byte[] getRoot(){
+		return header.getMerkleRootHash();
 	}
 	
-	public long getTimestamp(){
+	public byte[] getTimestamp(){
 		return header.getTimestamp();
 	}
 	
-	public long getNbits(){
+	public byte[] getNbits(){
 		return header.getnBits();
 	}
 	
-	public long getNonce(){
+	public byte[] getNonce(){
 		return header.getNonce();
 	}
 	
-	public String getHash(){
+	public byte[] getHash(){
 		return this.hash;
 	}
 	
 	@Override
 	public String toString(){
 		return "Block {" + "\n"
-			 + "  version : " + this.getVersion() + "\n"
-		     + "  this block hash   : " + this.getHash() + "\n"
-		     + "  prev block hash   : " + this.getPreviousBlockHash() + "\n"
-		     + "  merkle root hash  : " + this.getRoot() + "\n"
-		     + "  timestamp : " + this.getTimestamp() + "\n"
-		     + "  nBits : " + this.getNbits() + "\n"
-		     + "  nonce : " + this.getNonce() + "\n"
+			 + "  version : " + byteToString(this.getVersion()) + "\n"
+		     + "  this block hash   : " + byteToString(this.getHash()) + "\n"
+		     + "  prev block hash   : " + byteToString(this.getPreviousBlockHash()) + "\n"
+		     + "  merkle root hash  : " + byteToString(this.getRoot()) + "\n"
+		     + "  timestamp : " + byteToString(this.getTimestamp()) + "\n"
+		     + "  nBits : " + byteToString(this.getNbits()) + "\n"
+		     + "  nonce : " + byteToString(this.getNonce()) + "\n"
 		     + "}";
 	}
-	
 }

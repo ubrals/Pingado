@@ -1,8 +1,9 @@
 import static utils.Sha.getSha256;
 
-import core.Block_String;
 import core.Merkle;
 import core.Transaction;
+import deprecated.Block_String;
+
 import static utils.Coinbase.generateCoinbase;
 
 public class runTest7 {

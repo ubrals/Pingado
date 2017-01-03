@@ -1,6 +1,6 @@
 import static utils.Sha.getSha256;
 
-import core.Block_old;
+import deprecated.Block_old;
 
 public class runTest4 {
 

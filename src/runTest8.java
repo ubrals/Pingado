@@ -38,5 +38,17 @@ public class runTest8 {
 		System.out.println();
 		System.out.println(Conversions.hexToDecInternalByteOrder(Conversions.byteToString(array)));
 		System.out.println(utils.Conversions.hexToDec("24d95a54"));
+		System.out.println();
+        for(byte bk : key){
+            System.out.print(bk + " ");
+        }
+        System.out.println();
+        for(byte bk : key){
+            System.out.print((int)(bk & 0xff) + " ");
+        }
+        System.out.println();
+        for(byte bk : key){
+            System.out.print((char)(bk & 0xff) + " ");
+        }
 	}
 }

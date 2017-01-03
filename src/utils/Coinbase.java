@@ -7,7 +7,7 @@ public class Coinbase {
 		
 		for(int i=0; i<100; i++){
 			double rnd = Math.random();
-			key[i] = (byte)(int)(rnd*128);
+			key[i] = (byte)(int)(rnd*256);
 		}
 		
 		return key;

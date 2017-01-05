@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utils.Conversions;
-import utils.Conversions.*;
+import static utils.Conversions.*;
 
 //import core.Merkle.Header.Input;
 //import core.Merkle.Header.Output;
@@ -147,7 +147,7 @@ public class Transaction {
          * @param tx_out // every output transaction within the block
          * @param lock_time // timestamp
          */
-        private byte[] version = new byte[]{49, (Byte)null, (Byte)null, (Byte)null}; // 4 bytes
+        private byte[] version = new byte[]{49, 48, 48, 48}; // 4 bytes
         private int tx_in_count;
         private List<Input> tx_in = new ArrayList<Input>();
         private int tx_out_count;
@@ -155,6 +155,8 @@ public class Transaction {
         private byte[] lock_time = new byte[4];
         
         private Header(){
+            tx_in_count = 0;
+            tx_out_count = 0;
         }
         
         private Header(byte[] version){
@@ -225,43 +227,72 @@ public class Transaction {
     }
     //Header end
     //////////////
-
-	String txid;
-	double satoshis;
-	byte coinbase[] = new byte[100];
-	
-	public Transaction() {
-	}
-	
-	public Transaction(String txid, double satoshis){
-		this.setTxid(txid);
-		this.setSatoshis(satoshis);
-	}
-	
-	public String getTxid() {
-		return txid;
-	}
-
-	public void setTxid(String txid) {
-		this.txid = txid;
-	}
-
-	public double getSatoshis() {
-		return satoshis;
-	}
-
-	public void setSatoshis(double satoshis) {
-		this.satoshis = satoshis;
-	}
-	
-	public byte[] getCoinbase() {
-		return coinbase;
-	}
-	
-	public void setCoinbase(byte[] coinbase) {
-		this.coinbase = coinbase;
-	}
-	public String toMakeHash(){
-		return this.getTxid() + this.getSatoshis();
+    
+    Header header;
+    String txid;
+    double satoshis;
+    byte coinbase[] = new byte[100];
+    
+    public Transaction() {
+        header = new Header();
+        txid = null;
+        satoshis = 0.0;
+    }
+    
+    public Transaction(String txid, double satoshis){
+        this.setTxid(txid);
+        this.setSatoshis(satoshis);
+    }
+    
+    private Header getHeader(){
+        return header;
+    }
+    
+    public byte[] getVersion(){
+        return this.getHeader().getVersion();
+    }
+    
+    public int getTx_in_count(){
+        return this.getHeader().getTx_in_count();
+    }
+    
+    public List<Input> getTx_in() {
+        return this.getHeader().getTx_in();
+    }
+    
+    public String getTxid() {
+        return txid;
+    }
+    
+    public void setTxid(String txid) {
+        this.txid = txid;
+    }
+    
+    public double getSatoshis() {
+        return satoshis;
+    }
+    
+    public void setSatoshis(double satoshis) {
+        this.satoshis = satoshis;
+    }
+    
+    public byte[] getCoinbase() {
+        return coinbase;
+    }
+    
+    public void setCoinbase(byte[] coinbase) {
+        this.coinbase = coinbase;
+    }
+    
+    public String toMakeHash(){
+        String ret = this.getTxid() + this.getSatoshis() + byteToString(this.getCoinbase());
+        
+        for (int i=0; i<this.header.tx_in_count; i++)
+            ret += this.header.getTx_in().get(i).toMakeHash();
+        
+        for (int i=0; i<this.header.tx_out_count; i++)
+            ret += this.header.getTx_out().get(i).toMakeHash();
+        
+        return ret;
 	}
 }

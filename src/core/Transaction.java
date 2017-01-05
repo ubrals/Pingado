@@ -14,130 +14,6 @@ public class Transaction {
     //Header
     private class Header{
         /*****
-         * 
-         * @author ubrals
-         * Transaction's header was set to be a nested and private class, in order to (como é que chama aquela porra de APD3 mesmo?!??!)
-         * and encapsulation.
-         * 
-         * Input and Output were set as nested classes in order to(como é que chama aquela porra de APD3 mesmo?!??!)
-         * and encapsulation.
-         */
-        ////////////
-        // Input
-        private class Input {
-            /*****
-             * 
-             * @param previousOutpointHash // Composition of previousOutput
-             * @param previousOutpointIndex // Composition of previousOutput
-             * 
-             * 
-             */
-            private byte[] previousOutpointHash = new byte[32];
-            private byte[] previousOutpointIndex = new byte[4];
-            private byte[] previousOutput = new byte[36];
-            private byte[] scriptBytes = new byte[2]; // Arbitrarily defined as 2 bytes
-            private byte[] scriptSig = new byte[10000];
-            private int sequenceNumber;
-            
-            private Input(){
-            }
-            
-            private Input(byte[] previousOutpointHash, byte[] previousOutpointIndex, byte[] scriptBytes, byte[] scriptSig){
-                this.setPreviousOutpointHash(previousOutpointHash);
-                this.setPreviousOutpointIndex(previousOutpointIndex);
-                this.setScriptBytes(scriptBytes);
-                this.setScriptSig(scriptSig);
-                this.setSequenceNumber(0);
-            }
-            
-            private byte[] getPreviousOutpointHash() {
-                return previousOutpointHash;
-            }
-
-            private void setPreviousOutpointHash(byte[] previousOutpointHash) {
-                this.previousOutpointHash = previousOutpointHash;
-            }
-
-            private byte[] getPreviousOutpointIndex() {
-                return previousOutpointIndex;
-            }
-
-            private void setPreviousOutpointIndex(byte[] previousOutpointIndex) {
-                this.previousOutpointIndex = previousOutpointIndex;
-            }
-
-            public byte[] getScriptBytes() {
-                return scriptBytes;
-            }
-
-            public void setScriptBytes(byte[] scriptBytes) {
-                this.scriptBytes = scriptBytes;
-            }
-            
-            private byte[] getScriptSig() {
-                return scriptSig;
-            }
-            
-            private void setScriptSig(byte[] scriptSig) {
-                this.scriptSig = scriptSig;
-            }
-        
-            private int getSequenceNumber() {
-                return sequenceNumber;
-            }
-        
-            private void setSequenceNumber(int sequenceNumber) {
-                this.sequenceNumber = sequenceNumber;
-            }
-            
-            private String toMakeHash(){
-                return Conversions.byteToString(this.getPreviousOutpointHash())
-                     + Conversions.byteToString(this.getPreviousOutpointIndex())
-                     + Conversions.byteToString(this.getScriptSig())
-                     + this.getSequenceNumber();
-            }
-        }
-        // Input end
-        ////////////
-        
-        ////////////
-        // Output
-        private class Output{
-            private double satoshis;
-            private String scriptPubKey;
-            
-            public Output(){
-            }
-            
-            public Output(double satoshis, String scriptPubKey){
-                this.setSatoshis(satoshis);
-                this.setScriptPubKey(scriptPubKey);
-            }
-            
-            public double getSatoshis() {
-                return satoshis;
-            }
-        
-            public void setSatoshis(double satoshis) {
-                this.satoshis = satoshis;
-            }
-        
-            public String getScriptPubKey() {
-                return scriptPubKey;
-            }
-        
-            public void setScriptPubKey(String scriptPubKey) {
-                this.scriptPubKey = scriptPubKey;
-            }
-            
-            public String toMakeHash(){
-                return this.getSatoshis() + this.getScriptPubKey();
-            }
-        }
-        // Output end
-        ////////////
-        
-        /*****
          * Header parms
          * 
          * @param version // class' default is 1
@@ -149,9 +25,7 @@ public class Transaction {
          */
         private byte[] version = new byte[]{49, 48, 48, 48}; // 4 bytes
         private int tx_in_count;
-        private List<Input> tx_in = new ArrayList<Input>();
         private int tx_out_count;
-        private List<Output> tx_out = new ArrayList<Output>();
         private byte[] lock_time = new byte[4];
         
         private Header(){
@@ -177,30 +51,16 @@ public class Transaction {
             return tx_in_count;
         }
         
-        private List<Input> getTx_in() {
-            return tx_in;
-        }
-        
-        private void addTx_in(String s_satoshis, String pubkeyScriptSig, String txid, String scriptSig){
-            Input tx_in = new Input(Conversions.stringToByte(s_satoshis)
-                                  , Conversions.stringToByte(pubkeyScriptSig)
-                                  , Conversions.stringToByte(txid)
-                                  , Conversions.stringToByte(scriptSig));
-            this.tx_in.add(tx_in);
-            this.tx_in_count ++;
+        private void incrementTx_in_count() {
+            this.tx_in_count++;
         }
         
         private int getTx_out_count() {
             return tx_out_count;
         }
         
-        private void addTx_out(Output tx_out){
-            this.tx_out.add(tx_out);
-            this.tx_out_count ++;
-        }
-        
-        private List<Output> getTx_out() {
-            return tx_out;
+        private void incrementTx_out_count() {
+            this.tx_out_count++;
         }
         
         private byte[] getLock_time() {
@@ -218,8 +78,8 @@ public class Transaction {
             for(int i=0; i<tx_in.size(); i++)
                 ret += tx_in.get(i).toMakeHash();
             ret += String.valueOf(this.getTx_out_count());
-            for(int i=0; i<tx_out.size(); i++)
-                ret += tx_out.get(i).toMakeHash();
+            for(int o=0; o<tx_out.size(); o++)
+                ret += tx_out.get(o).toMakeHash();
             ret += this.getLock_time();
             
             return ret;
@@ -228,10 +88,132 @@ public class Transaction {
     //Header end
     //////////////
     
-    Header header;
-    String txid;
-    double satoshis;
-    byte coinbase[] = new byte[100];
+    /*****
+     * 
+     * @author ubrals
+     * Transaction's header was set to be a nested and private class, in order to (como é que chama aquela porra de APD3 mesmo?!??!)
+     * and encapsulation.
+     * 
+     * Input and Output were set as nested classes in order to(como é que chama aquela porra de APD3 mesmo?!??!)
+     * and encapsulation.
+     */
+    ////////////
+    // Input
+    private class Input {
+        /*****
+         * 
+         * @param previousOutpointHash // Composition of previousOutput
+         * @param previousOutpointIndex // Composition of previousOutput
+         * 
+         * 
+         */
+        private byte[] previousOutpointHash = new byte[32];
+        private byte[] previousOutpointIndex = new byte[4];
+        private byte[] previousOutput = new byte[36];
+        private byte[] scriptBytes = new byte[2]; // Arbitrarily defined as 2 bytes
+        private byte[] scriptSig = new byte[10000];
+        private int sequenceNumber;
+        
+        private Input(){
+        }
+        
+        private Input(byte[] previousOutpointHash, byte[] previousOutpointIndex, byte[] scriptBytes, byte[] scriptSig){
+            this.setPreviousOutpointHash(previousOutpointHash);
+            this.setPreviousOutpointIndex(previousOutpointIndex);
+            this.setScriptBytes(scriptBytes);
+            this.setScriptSig(scriptSig);
+            this.setSequenceNumber(0);
+        }
+        
+        private byte[] getPreviousOutpointHash() {
+            return previousOutpointHash;
+        }
+    
+        private void setPreviousOutpointHash(byte[] previousOutpointHash) {
+            this.previousOutpointHash = previousOutpointHash;
+        }
+    
+        private byte[] getPreviousOutpointIndex() {
+            return previousOutpointIndex;
+        }
+    
+        private void setPreviousOutpointIndex(byte[] previousOutpointIndex) {
+            this.previousOutpointIndex = previousOutpointIndex;
+        }
+    
+        public byte[] getScriptBytes() {
+            return scriptBytes;
+        }
+    
+        public void setScriptBytes(byte[] scriptBytes) {
+            this.scriptBytes = scriptBytes;
+        }
+        
+        private byte[] getScriptSig() {
+            return scriptSig;
+        }
+        
+        private void setScriptSig(byte[] scriptSig) {
+            this.scriptSig = scriptSig;
+        }
+    
+        private int getSequenceNumber() {
+            return sequenceNumber;
+        }
+    
+        private void setSequenceNumber(int sequenceNumber) {
+            this.sequenceNumber = sequenceNumber;
+        }
+        
+        private String toMakeHash(){
+            return Conversions.byteToString(this.getPreviousOutpointHash())
+                 + Conversions.byteToString(this.getPreviousOutpointIndex())
+                 + Conversions.byteToString(this.getScriptSig())
+                 + this.getSequenceNumber();
+        }
+    }
+
+    ////////////
+    // Output
+    private class Output{
+        private double satoshis;
+        private String scriptPubKey;
+        
+        public Output(){
+        }
+        
+        public Output(double satoshis, String scriptPubKey){
+            this.setSatoshis(satoshis);
+            this.setScriptPubKey(scriptPubKey);
+        }
+        
+        public double getSatoshis() {
+            return satoshis;
+        }
+    
+        public void setSatoshis(double satoshis) {
+            this.satoshis = satoshis;
+        }
+    
+        public String getScriptPubKey() {
+            return scriptPubKey;
+        }
+    
+        public void setScriptPubKey(String scriptPubKey) {
+            this.scriptPubKey = scriptPubKey;
+        }
+        
+        public String toMakeHash(){
+            return this.getSatoshis() + this.getScriptPubKey();
+        }
+    }
+
+    private Header header;
+    private String txid;
+    private double satoshis;
+    private byte coinbase[] = new byte[100];
+    private List<Input> tx_in = new ArrayList<Input>();
+    private List<Output> tx_out = new ArrayList<Output>();
     
     public Transaction() {
         header = new Header();
@@ -256,8 +238,45 @@ public class Transaction {
         return this.getHeader().getTx_in_count();
     }
     
-    public List<Input> getTx_in() {
-        return this.getHeader().getTx_in();
+    public List<Byte> getTx_in() {
+        List tx_in = new ArrayList<Byte>();
+        for(Input in : this.tx_in){
+            // TODO: refazer
+            tx_in.add(in.getPreviousOutpointHash());
+        }
+        return tx_in;
+    }
+    
+    public void addTx_in(String s_satoshis, String pubkeyScriptSig, String txid, String scriptSig){
+        Input tx_in = new Input(Conversions.stringToByte(s_satoshis)
+                              , Conversions.stringToByte(pubkeyScriptSig)
+                              , Conversions.stringToByte(txid)
+                              , Conversions.stringToByte(scriptSig));
+        this.tx_in.add(tx_in);
+        this.getHeader().incrementTx_in_count();
+    }
+    
+    public int getTx_out_count(){
+        return this.getHeader().getTx_out_count();
+    }
+    
+    public List<Byte> getTx_out() {
+        List tx_out = new ArrayList<Byte>();
+        for(Output out : this.tx_out){
+            // TODO: refazer
+            tx_out.add(out.getPreviousOutpointHash());
+        }
+        return tx_in;
+    }
+    
+    public void addTx_in(String s_satoshis, String pubkeyScriptSig, String txid, String scriptSig){
+        Output tx_out = new Output();
+        Conversions.stringToByte(s_satoshis)
+                              , Conversions.stringToByte(pubkeyScriptSig)
+                              , Conversions.stringToByte(txid)
+                              , Conversions.stringToByte(scriptSig));
+        this.tx_out.add(tx_out);
+        this.getHeader().incrementTx_out_count();
     }
     
     public String getTxid() {
@@ -285,14 +304,9 @@ public class Transaction {
     }
     
     public String toMakeHash(){
-        String ret = this.getTxid() + this.getSatoshis() + byteToString(this.getCoinbase());
-        
-        for (int i=0; i<this.header.tx_in_count; i++)
-            ret += this.header.getTx_in().get(i).toMakeHash();
-        
-        for (int i=0; i<this.header.tx_out_count; i++)
-            ret += this.header.getTx_out().get(i).toMakeHash();
-        
+        String ret = this.getTxid() + this.getSatoshis() + byteToString(this.getCoinbase())
+                   + this.getHeader().toMakeHash();
+                
         return ret;
 	}
 }

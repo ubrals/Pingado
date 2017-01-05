@@ -40,6 +40,7 @@ public class Conversions {
 		int db=0;
 		String dch = "";
 		
+//      System.out.println("prod:" + produto + " " + "resto:" + resto);
 		//produto = dividendo / divisor;
 		while(dividendo % divisor > 0l){
 			produto = dividendo / divisor;

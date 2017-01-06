@@ -31,7 +31,7 @@ public class Conversions {
 		
 		return retArray;
 	}
-	public static String decToHexInternalByteOrder(long num){
+	public static String decToHexInternalByteOrder_old_1(long num){
 		long dividendo = num,
 			 divisor = 16l,
 			 produto = 0l,
@@ -59,6 +59,38 @@ public class Conversions {
 		
 		return retArray;
 	}
+    public static String decToHexInternalByteOrder_old_2(long num){
+        String retArray = "";
+        int db=0;
+        String dch = "";
+        String swap = decToHex(num);;
+        
+        if(swap.length()%2 != 0){
+            swap = "0" + swap;
+        }
+        
+        for(int i=0; i<swap.length()-1; i=i+2){
+            retArray = String.valueOf(swap.charAt(i)) + String.valueOf(swap.charAt(i+1)) + retArray;
+        }
+        
+        return retArray;
+    }
+    public static String decToHexInternalByteOrder(long num){
+        String retArray = "";
+        int db=0;
+        String dch = "";
+        String swap = String.format("%x", num);
+        
+        if(swap.length()%2 != 0){
+            swap = "0" + swap;
+        }
+        
+        for(int i=0; i<swap.length()-1; i=i+2){
+            retArray = String.valueOf(swap.charAt(i)) + String.valueOf(swap.charAt(i+1)) + retArray;
+        }
+        
+        return retArray;
+    }
 	
 	private static long decodeHex(char num){
 		switch(num){
@@ -87,7 +119,7 @@ public class Conversions {
 		}
 		return ret;
 	}
-	public static long hexToDecInternalByteOrder(String num){
+	public static long hexToDecInternalByteOrder_old_1(String num){
 		int len = num.length()-1;
 		long ret = 0l;
 		int ub = 0;
@@ -103,6 +135,33 @@ public class Conversions {
 		}
 		return ret;
 	}
+    public static long hexToDecInternalByteOrder(String num){
+        int len = num.length()-1;
+        long ret = 0l;
+        int ub = 0;
+        String rev = "";
+        
+        System.out.println("num:" + num);
+        for(int r=0; r<len; r+=2){
+            rev = String.valueOf((char)num.charAt(r)) + String.valueOf((char)num.charAt(r+1)) + rev;
+        }
+        System.out.println("rev:" + rev);
+//      System.out.println(rev + " " + num);
+//        System.out.println("valueof:" + Long.valueOf(rev));
+        if(rev.charAt(0) == '0')
+            rev = rev.substring(1, rev.length());
+        else
+            rev = rev;
+        System.out.println("rev:" + rev);
+        
+        for(int i = 0; i < rev.length(); i++){
+            char dig = rev.charAt(i);
+            ret += decodeHex(dig)*Math.pow(16, len-1);
+        }
+        System.out.println("ret:" + ret);
+        
+        return ret;
+    }
 	
 	public static String byteToString(byte[] bytes){
 		String str = "";

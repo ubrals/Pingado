@@ -31,12 +31,12 @@ public class runTest8 {
 		 i = (b & 0xff); // mask of rightmost 8 bits
 		System.out.println(i + " " + java.time.Instant.now().getEpochSecond());
 		System.out.println(utils.Conversions.decToHex(1415239972l));
-		System.out.println(utils.Conversions.decToHexInternalByteOrder(1415239972l));
-		byte array[] = utils.Conversions.stringToByte(utils.Conversions.decToHexInternalByteOrder(1415239972l));
+		System.out.println(utils.Conversions.decToHexInternalByteOrder_old_1(1415239972l));
+		byte array[] = utils.Conversions.stringToByte(utils.Conversions.decToHexInternalByteOrder_old_1(1415239972l));
 		for(byte b1 : array)
 			System.out.print((char)b1 + " ");
 		System.out.println();
-		System.out.println(Conversions.hexToDecInternalByteOrder(Conversions.byteToString(array)));
+		System.out.println(Conversions.hexToDecInternalByteOrder_old_1(Conversions.byteToString(array)));
 		System.out.println(utils.Conversions.hexToDec("24d95a54"));
 		System.out.println();
         for(byte bk : key){
@@ -53,9 +53,9 @@ public class runTest8 {
         System.out.println();
         System.out.println(Integer.MIN_VALUE);
         System.out.println();
-        System.out.println("Satoshis: " + Conversions.hexToDecInternalByteOrder("f0ca052a01000000") + " BTC");
-        System.out.println("Satoshis: " + String.valueOf(Conversions.hexToDecInternalByteOrder("f0ca052a01000000")) + " BTC");
-        System.out.print  ("Satoshis: " + Conversions.left(String.valueOf(Conversions.hexToDecInternalByteOrder("f0ca052a01000000")), 2) + ".");
-        System.out.println(Conversions.right(String.valueOf(Conversions.hexToDecInternalByteOrder("f0ca052a01000000")), 8) + " BTC");
+        System.out.println("Satoshis: " + Conversions.hexToDecInternalByteOrder_old_1("f0ca052a01000000") + " BTC");
+        System.out.println("Satoshis: " + String.valueOf(Conversions.hexToDecInternalByteOrder_old_1("f0ca052a01000000")) + " BTC");
+        System.out.print  ("Satoshis: " + Conversions.left(String.valueOf(Conversions.hexToDecInternalByteOrder_old_1("f0ca052a01000000")), 2) + ".");
+        System.out.println(Conversions.right(String.valueOf(Conversions.hexToDecInternalByteOrder_old_1("f0ca052a01000000")), 8) + " BTC");
 	}
 }

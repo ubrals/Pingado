@@ -24,19 +24,19 @@ public class Transaction {
          * @param lock_time // timestamp
          */
         private byte[] version = new byte[]{49, 48, 48, 48}; // 4 bytes
-        private int tx_in_count;
-        private int tx_out_count;
+        private byte[] tx_in_count  = new byte[4];
+        private byte[] tx_out_count = new byte[4];
         private byte[] lock_time = new byte[4];
         
         private Header(){
-            tx_in_count = 0;
-            tx_out_count = 0;
+            tx_in_count[0] = 48;
+            tx_out_count[0] = 48;
         }
         
         private Header(byte[] version){
             this.setVersion(version);
-            tx_in_count = 0;
-            tx_out_count = 0;
+            tx_in_count[0] = 48;
+            tx_out_count[0] = 48;
         }
         
         private byte[] getVersion() {
@@ -47,20 +47,24 @@ public class Transaction {
             this.version = version;
         }
         
-        private int getTx_in_count() {
+        private byte[] getTx_in_count() {
             return tx_in_count;
         }
         
         private void incrementTx_in_count() {
-            this.tx_in_count++;
+            long counter = Long.valueOf(byteToString(tx_in_count));
+            counter++;
+            tx_in_count = decToHexInternalByteOrderArray(counter);
         }
         
-        private int getTx_out_count() {
+        private byte[] getTx_out_count() {
             return tx_out_count;
         }
         
         private void incrementTx_out_count() {
-            this.tx_out_count++;
+            long counter = Long.valueOf(byteToString(tx_out_count));
+            counter++;
+            tx_out_count = decToHexInternalByteOrderArray(counter);
         }
         
         private byte[] getLock_time() {
@@ -176,22 +180,22 @@ public class Transaction {
     ////////////
     // Output
     private class Output{
-        private long satoshis;
+        private byte satoshis[] = new byte[16];
         private String scriptPubKey;
         
         public Output(){
         }
         
-        public Output(long satoshis, String scriptPubKey){
+        public Output(byte satoshis[], String scriptPubKey){
             this.setSatoshis(satoshis);
             this.setScriptPubKey(scriptPubKey);
         }
         
-        public long getSatoshis() {
+        public byte[] getSatoshis() {
             return satoshis;
         }
     
-        public void setSatoshis(long satoshis) {
+        public void setSatoshis(byte satoshis[]) {
             this.satoshis = satoshis;
         }
     
@@ -210,7 +214,7 @@ public class Transaction {
 
     private Header header;
     private String txid;
-    private long satoshis;
+    private byte[] satoshis = new byte[16];
     private byte coinbase[] = new byte[100];
     private List<Input> tx_in = new ArrayList<Input>();
     private List<Output> tx_out = new ArrayList<Output>();
@@ -218,10 +222,10 @@ public class Transaction {
     public Transaction() {
         header = new Header();
         txid = null;
-        satoshis = 0l;
+        satoshis = new byte[]{48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48};
     }
     
-    public Transaction(String txid, long satoshis){
+    public Transaction(String txid, byte satoshis[]){
         this.setTxid(txid);
         this.setSatoshis(satoshis);
     }
@@ -234,7 +238,7 @@ public class Transaction {
         return this.getHeader().getVersion();
     }
     
-    public int getTx_in_count(){
+    public byte[] getTx_in_count(){
         return this.getHeader().getTx_in_count();
     }
     
@@ -256,7 +260,7 @@ public class Transaction {
         this.getHeader().incrementTx_in_count();
     }
     
-    public int getTx_out_count(){
+    public byte[] getTx_out_count(){
         return this.getHeader().getTx_out_count();
     }
     
@@ -264,15 +268,15 @@ public class Transaction {
         List tx_out = new ArrayList<Byte>();
         for(Output out : this.tx_out){
             // TODO: refazer
-            tx_out.add(Conversions.decToHexInternalByteOrder(out.getSatoshis()));
+            tx_out.add(out.getSatoshis());
             tx_out.add(out.getScriptPubKey());
         }
         return tx_out;
     }
     
-    public void addTx_out(String satoshis, String scriptPubKey){
+    public void addTx_out(byte satoshis[], String scriptPubKey){
         Output tx_out = new Output();
-        tx_out = new Output(Long.valueOf(satoshis), scriptPubKey);
+        tx_out = new Output(satoshis, scriptPubKey);
         
         this.tx_out.add(tx_out);
         this.getHeader().incrementTx_out_count();
@@ -286,11 +290,11 @@ public class Transaction {
         this.txid = txid;
     }
     
-    public double getSatoshis() {
+    public byte[] getSatoshis() {
         return satoshis;
     }
     
-    public void setSatoshis(long satoshis) {
+    public void setSatoshis(byte satoshis[]) {
         this.satoshis = satoshis;
     }
     

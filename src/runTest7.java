@@ -5,6 +5,7 @@ import core.Transaction;
 import deprecated.Block_String;
 
 import static utils.Coinbase.generateCoinbase;
+import static utils.deprecated.Conversions.*;
 
 public class runTest7 {
 
@@ -17,7 +18,7 @@ public class runTest7 {
 		merkle_root = new Merkle();
 		
 		// Transaction 1
-		double satoshis_trx1 = 1.0;
+		byte[] satoshis_trx1 = new byte[]{49};
 		byte coinbase[] = new byte[100];
 		coinbase = generateCoinbase();
 		String hash_trx1 = getSha256(getSha256("transaction1", 64), 64);

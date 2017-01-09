@@ -1,4 +1,4 @@
-import utils.Conversions;
+import static utils.deprecated.Conversions.*;
 
 public class runTest6 {
 
@@ -11,8 +11,8 @@ public class runTest6 {
 			s_inteiro += (char)b;
 		System.out.println(s_inteiro);
 		
-		System.out.println(Conversions.byteToString(new byte[] {'1', '2', '3', '4', '5', '6', '7'}) + "??");
-		System.out.println(Conversions.byteToArrayInt(new byte[] {'1', '2', '3', '4', '5', '6', '7'}) + 1l);
+		System.out.println(byteToString(new byte[] {'1', '2', '3', '4', '5', '6', '7'}) + "??");
+		System.out.println(byteToArrayInt(new byte[] {'1', '2', '3', '4', '5', '6', '7'}) );
 		
 		String hash = "f76eec6c13b11b4a843e562d8ecb20511a623094f6b027ec7df4331247ead7ec" + "z";
 		byte b_hash[] = new byte[80];
@@ -24,6 +24,6 @@ public class runTest6 {
 			System.out.print(b + " ");
 		System.out.println("");
 		
-		System.out.println(Conversions.byteToString(b_hash));
+		System.out.println(byteToString(b_hash));
 	}
 }

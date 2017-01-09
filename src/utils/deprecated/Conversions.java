@@ -1,4 +1,4 @@
-package utils;
+package utils.deprecated;
 
 public class Conversions {
 	private static String decodeHex(int num){
@@ -33,6 +33,50 @@ public class Conversions {
 		
 		return retArray;
 	}
+	public static String decToHexInternalByteOrder_old_1(long num){
+		long dividendo = num,
+			 divisor = 16l,
+			 produto = 0l,
+			 resto = num;
+		String retArray = "";
+		int db=0;
+		String dch = "";
+		
+//      System.out.println("prod:" + produto + " " + "resto:" + resto);
+		//produto = dividendo / divisor;
+		while(dividendo % divisor > 0l){
+			produto = dividendo / divisor;
+			resto = dividendo % divisor;
+			dividendo = produto;
+//			System.out.println("prod:" + produto + " " + "resto:" + resto);
+			dch = String.valueOf(decodeHex((int)resto)) + dch;
+			db++;
+//			retArray = retArray + String.valueOf(decodeHex((int)resto));
+			if(db == 2){
+				retArray = retArray + dch;
+				db = 0;
+				dch = "";
+			}
+		}
+		
+		return retArray;
+	}
+    public static String decToHexInternalByteOrder_old_2(long num){
+        String retArray = "";
+        int db=0;
+        String dch = "";
+        String swap = decToHex(num);;
+        
+        if(swap.length()%2 != 0){
+            swap = "0" + swap;
+        }
+        
+        for(int i=0; i<swap.length()-1; i=i+2){
+            retArray = String.valueOf(swap.charAt(i)) + String.valueOf(swap.charAt(i+1)) + retArray;
+        }
+        
+        return retArray;
+    }
     public static String decToHexInternalByteOrder(long num){
         String retArray = "";
         int db=0;
@@ -50,27 +94,6 @@ public class Conversions {
         return retArray;
     }
 	
-    public static byte[] decToHexInternalByteOrderArray(long num){
-        String retArray = "";
-        byte[] retByte = null;
-        int db=0;
-        String dch = "";
-        String swap = decToHexInternalByteOrder(num);
-        
-        if(swap.length()%2 != 0){
-            swap = "0" + swap;
-        }
-        
-        for(int i=0; i<swap.length()-1; i=i+2){
-            retArray = String.valueOf(swap.charAt(i)) + String.valueOf(swap.charAt(i+1)) + retArray;
-        }
-        
-        for(int i=0; i<retArray.length(); i++)
-            retByte[i] = (byte)retArray.charAt(i);
-        
-        return retByte;
-    }
-    
 	private static long decodeHex(char num){
 		switch(num){
 		case 'a':
@@ -94,6 +117,22 @@ public class Conversions {
 		
 		for(int i = 0; i <= len; i++){
 			char dig = num.charAt(i);
+			ret += decodeHex(dig)*Math.pow(16, len-i);
+		}
+		return ret;
+	}
+	public static long hexToDecInternalByteOrder_old_1(String num){
+		int len = num.length()-1;
+		long ret = 0l;
+		int ub = 0;
+		String rev = "";
+		
+		for(int r=len; r>0; r-=2){
+			rev += String.valueOf((char)num.charAt(r-1)) + String.valueOf((char)num.charAt(r));
+		}
+//		System.out.println(rev + " " + num);
+		for(int i = 0; i <= len; i++){
+			char dig = rev.charAt(i);
 			ret += decodeHex(dig)*Math.pow(16, len-i);
 		}
 		return ret;

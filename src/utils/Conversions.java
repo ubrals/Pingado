@@ -52,7 +52,7 @@ public class Conversions {
 	
     public static byte[] decToHexInternalByteOrderArray(long num){
         String retArray = "";
-        byte[] retByte = null;
+        byte[] retByte = new byte[Long.BYTES];
         int db=0;
         String dch = "";
         String swap = decToHexInternalByteOrder(num);
@@ -165,5 +165,15 @@ public class Conversions {
         }
         
         return ret;
+    }
+    
+    public static String printLongWithDecimals(String num){
+        String s_num = String.valueOf(num);
+//        if(Character.isDefined(decimal))
+            
+        if(s_num.length() < 9)
+            s_num = s_num + "00000000";
+        
+        return s_num;
     }
 }

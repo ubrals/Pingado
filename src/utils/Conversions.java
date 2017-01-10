@@ -61,6 +61,8 @@ public class Conversions {
             swap = "0" + swap;
         }
         
+        
+        
         for(int i=0; i<swap.length()-1; i=i+2){
             retArray = String.valueOf(swap.charAt(i)) + String.valueOf(swap.charAt(i+1)) + retArray;
         }
@@ -128,7 +130,7 @@ public class Conversions {
 		return str;
 	}
 	
-	public static int[] byteToArrayInt(byte[] bytes){
+	public static int[] byteToIntArray(byte[] bytes){
 //		String str = "";
 		int array[] = new int[bytes.length];
 		int i = 0;
@@ -137,6 +139,13 @@ public class Conversions {
 			array[i++] = (b & 0xff);
 		}
 		return array;
+	}
+	
+	public static String intArrayToString(int[] ints){
+	       String str = "";
+	        for(int i : ints)
+	            str += (int)(i);
+	        return str;
 	}
 	
 	public static byte[] stringToByte(String str){

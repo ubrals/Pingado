@@ -24,19 +24,19 @@ public class Transaction {
          * @param lock_time // timestamp
          */
         private byte[] version = new byte[]{49, 48, 48, 48}; // 4 bytes
-        private byte[] tx_in_count  = new byte[4];
-        private byte[] tx_out_count = new byte[4];
+        private byte[] tx_in_count  = new byte[8];
+        private byte[] tx_out_count = new byte[8];
         private byte[] lock_time = new byte[4];
         
         private Header(){
-            tx_in_count = new byte[]{48, 48, 48, 48};
-            tx_out_count = new byte[]{48, 48, 48, 48}; 
+            tx_in_count = new byte[]{48, 48, 48, 48, 48, 48, 48, 48};
+            tx_out_count = new byte[]{48, 48, 48, 48, 48, 48, 48, 48}; 
         }
         
         private Header(byte[] version){
             this.setVersion(version);
-            tx_in_count = new byte[]{48, 48, 48, 48};
-            tx_out_count = new byte[]{48, 48, 48, 48}; 
+            tx_in_count = new byte[]{48, 48, 48, 48, 48, 48, 48, 48};
+            tx_out_count = new byte[]{48, 48, 48, 48, 48, 48, 48, 48}; 
         }
         
         private byte[] getVersion() {
@@ -52,11 +52,17 @@ public class Transaction {
         }
         
         private void incrementTx_in_count() {
-            System.out.println(":" + byteToString(tx_in_count) + ":");
-            long counter = Long.valueOf(byteToString(tx_in_count));
+            System.out.println(byteToString(tx_in_count));
+            long counter = hexToDecInternalByteOrder(byteToString(tx_in_count));
             counter++;
-            System.out.println(":" + counter + ":");
+            System.out.println(counter);
+//            if(counter%10 == counter) // TODO: completar bytes nulos
+//                counter=10+counter;
+            
             tx_in_count = decToHexInternalByteOrderArray(counter);
+            System.out.println(decToHexInternalByteOrderArray(counter).length);
+            System.out.println(byteToString(tx_in_count));
+//            System.out.println(hexToDecInternalByteOrder(byteToString(tx_in_count)));
         }
         
         private byte[] getTx_out_count() {
@@ -79,14 +85,10 @@ public class Transaction {
         
         private String toMakeHash(){
             String ret;
-            ret =  String.valueOf(this.getVersion());
-            ret += String.valueOf(this.getTx_in_count());
-            for(int i=0; i<tx_in.size(); i++)
-                ret += tx_in.get(i).toMakeHash();
+            ret =  byteToString(this.getVersion());
+            ret += byteToString(this.getTx_in_count());
             ret += String.valueOf(this.getTx_out_count());
-            for(int o=0; o<tx_out.size(); o++)
-                ret += tx_out.get(o).toMakeHash();
-            ret += this.getLock_time();
+            ret += byteToString(this.getLock_time());
             
             return ret;
         }
@@ -186,7 +188,7 @@ public class Transaction {
             return Conversions.byteToString(this.getPreviousOutpointHash())
                  + Conversions.byteToString(this.getPreviousOutpointIndex())
                  + Conversions.byteToString(this.getScriptSig())
-                 + this.getSequenceNumber();
+                 + Conversions.byteToString(this.getSequenceNumber());
         }
     }
 
@@ -326,9 +328,23 @@ public class Transaction {
     }
     
     public String toMakeHash(){
-        String ret = this.getTxid() + " + " + printLongWithDecimals(byteToString(this.getSatoshis())) + " + " + byteToArrayInt(this.getCoinbase()) + "  ___ + ____ "
+        String ret = this.getTxid() + printLongWithDecimals(byteToString(this.getSatoshis()))
+                   + intArrayToString(byteToIntArray(this.getCoinbase())) + "  ___ + ____ "
                    + this.getHeader().toMakeHash();
-                
+        //for(int i=0; i<tx_in.size(); i++)
+        String smax = byteToString(this.getHeader().getTx_in_count());
+        System.out.println(":" + byteToString(this.getHeader().getTx_in_count()) + ":" + smax.length());
+        long lmax = Long.valueOf(right(smax, smax.length()-1));
+        int imax = (int)(lmax);
+        System.out.println(":" + imax + ":");
+//                counter++;
+//                tx_in_count = decToHexInternalByteOrderArray(counter);
+        for(int i=0; i<imax; i++)
+            ret += tx_in.get(i).toMakeHash();
+        //for(int o=0; o<tx_out.size(); o++)
+        for(int o=0; o<Integer.valueOf(byteToString(this.getHeader().getTx_in_count())); o++)
+            ret += tx_out.get(o).toMakeHash();
+
         return ret;
 	}
 }

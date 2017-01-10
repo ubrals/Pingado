@@ -22,21 +22,22 @@ public class Transaction {
          * @param tx_out_count // count of output transactions
          * @param tx_out // every output transaction within the block
          * @param lock_time // timestamp
+         * 
          */
         private byte[] version = new byte[]{49, 48, 48, 48}; // 4 bytes
-        private byte[] tx_in_count  = new byte[8];
-        private byte[] tx_out_count = new byte[8];
+        private byte[] tx_in_count  = new byte[4];
+        private byte[] tx_out_count = new byte[4];
         private byte[] lock_time = new byte[4];
         
         private Header(){
-            tx_in_count = new byte[]{48, 48, 48, 48, 48, 48, 48, 48};
-            tx_out_count = new byte[]{48, 48, 48, 48, 48, 48, 48, 48}; 
+            tx_in_count = new byte[]{48, 48, 48, 48};
+            tx_out_count = new byte[]{48, 48, 48, 48}; 
         }
         
         private Header(byte[] version){
             this.setVersion(version);
-            tx_in_count = new byte[]{48, 48, 48, 48, 48, 48, 48, 48};
-            tx_out_count = new byte[]{48, 48, 48, 48, 48, 48, 48, 48}; 
+            tx_in_count = new byte[]{48, 48, 48, 48};
+            tx_out_count = new byte[]{48, 48, 48, 48}; 
         }
         
         private byte[] getVersion() {
@@ -52,16 +53,15 @@ public class Transaction {
         }
         
         private void incrementTx_in_count() {
-            System.out.println(byteToString(tx_in_count));
+            System.out.println(hexToDecInternalByteOrder(byteToString(tx_in_count)));
             long counter = hexToDecInternalByteOrder(byteToString(tx_in_count));
             counter++;
-            System.out.println(counter);
+//            System.out.println(counter);
 //            if(counter%10 == counter) // TODO: completar bytes nulos
 //                counter=10+counter;
             
             tx_in_count = decToHexInternalByteOrderArray(counter);
-            System.out.println(decToHexInternalByteOrderArray(counter).length);
-            System.out.println(byteToString(tx_in_count));
+//            System.out.println(byteToString(tx_in_count));
 //            System.out.println(hexToDecInternalByteOrder(byteToString(tx_in_count)));
         }
         
@@ -277,6 +277,8 @@ public class Transaction {
                               , Conversions.stringToByte(txid)
                               , Conversions.stringToByte(scriptSig));
         this.tx_in.add(tx_in);
+        this.getHeader().incrementTx_in_count();
+        this.getHeader().incrementTx_in_count();
         this.getHeader().incrementTx_in_count();
     }
     

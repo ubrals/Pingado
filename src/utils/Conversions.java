@@ -100,7 +100,7 @@ public class Conversions {
 		}
 		return ret;
 	}
-    public static long hexToDecInternalByteOrder(String num){
+    public static long hexToDecInternalByteOrder1(String num){
         int len = num.length()-1;
         long ret = 0l;
         int ub = 0;
@@ -123,6 +123,25 @@ public class Conversions {
         return ret;
     }
 	
+    public static long hexToDecInternalByteOrder(String num){
+        System.out.println("hexToDecInternalByteOrder:" + num);
+        int len = num.length()-1;
+        long ret = 0l;
+        String rev = "";
+        
+        for(int r=0; r<len; r+=2){
+            rev = String.valueOf((char)num.charAt(r)) + String.valueOf((char)num.charAt(r+1)) + rev;
+        }
+        while(rev.charAt(0) == '0' && rev.length() != 1){
+            rev = rev.substring(1, rev.length());
+        }
+        
+        System.out.println("rev:" + rev);
+        ret = Long.valueOf(rev);
+        System.out.println("ret:" + ret);
+        return ret;
+    }
+    
 	public static String byteToString(byte[] bytes){
 		String str = "";
 		for(byte b : bytes)

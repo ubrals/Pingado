@@ -10,12 +10,13 @@ public class ConversionsNew {
         
         return swap;
     }
+    
     public static long hexToDec(String num){
         long ret;
         if(num.charAt(0) == '0')
-            ret = Long.valueOf(num.substring(1, num.length()));
+            ret = Long.parseUnsignedLong(num, 16);
         else
-            ret = Long.parseUnsignedLong("0x"+ num, 16);
+            ret = Long.parseUnsignedLong(num, 16);
         
         return ret;
     }
@@ -31,6 +32,23 @@ public class ConversionsNew {
         
         return retArray;
     }
+    
+    public static long hexToDecInternalByteOrder(String num){
+        int len = num.length();
+        long ret = 0l;
+        String rev = "";
+        
+        for(int r=0; r<len-1; r+=2){
+            rev = String.valueOf((char)num.charAt(r)) + String.valueOf((char)num.charAt(r+1)) + rev;
+        }
+        while(rev.charAt(0) == '0' && rev.length() != 1){
+            rev = rev.substring(1, rev.length());
+        }
+        
+        ret = Long.parseUnsignedLong(rev, 16);
+        return ret;
+    }
+
     
     public static String decToString(long num){
         String swap = Long.toString(num);
@@ -51,12 +69,9 @@ public class ConversionsNew {
         String swap = decToStringEven(num);
         byte[] retArray = new byte[swap.length()];
         
-//        System.out.println("num:"+ num + " swp:"+swap);
         for(int i=0; i<swap.length(); i++){
-//            System.out.println("swp:chr:"+i+ ":"+swap.charAt(i) +" ");
-            retArray[i] = (byte) swap.charAt(i);
+            retArray[swap.length()-i-1] = (byte) swap.charAt(i);
         }
-//        System.out.println();
         
         return retArray;
     }
@@ -68,18 +83,46 @@ public class ConversionsNew {
         byte[] retArray = new byte[swap.length];
 
         for(int i=0; i<swap.length-1; i=i+2){
-//        for(int i=0; i<swap.length-1; i=i+2){
             retArray[swap.length-i-2] = swap[i+1];
             retArray[swap.length-i-1] = swap[i];
-//            + retArray;
         }
         
         return retArray;
     }
     
-//    public static byte[] swapInternalByteOrder(byte[] bytes){
-//        
-//    }
+    public static long byteArrayEvenToDec(byte[] bytes){
+        String swap = "";
+        byte[] retArray = new byte[bytes.length];
+        
+//        for(int i=0; i<swap.length-1; i=i+2){
+//            retArray[swap.length-i-2] = swap[i+1];
+//            retArray[swap.length-i-1] = swap[i];
+//        }
+        for(int i=0; i<bytes.length; i++)
+            swap = "" + (char)bytes[i] + swap;
+        
+        return Long.parseLong(swap);
+    }
+    
+    public static long byteArrayEvenToDecInternalByteOrder(byte[] bytes){
+        String swap = "";
+        String swap2 = "";
+        byte[] retArray = new byte[bytes.length];
+        
+//        for(int i=0; i<swap.length-1; i=i+2){
+//            retArray[swap.length-i-2] = swap[i+1];
+//            retArray[swap.length-i-1] = swap[i];
+//        }
+        for(int i=0; i<bytes.length; i++)
+            swap = "" + (char)bytes[i] + swap;
+        
+        for(int i=0; i<swap.length()-1; i=i+2){
+            swap2 = String.valueOf(swap.charAt(i)) + String.valueOf(swap.charAt(i+1)) + swap2;
+        }
+        
+        return Long.parseLong(swap2);
+    }
+    
     public static String right(String word, int count){
         String ret = "";
         int len = word.length();

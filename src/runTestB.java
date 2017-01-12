@@ -14,14 +14,26 @@ public class runTestB {
         reverse = decToByteArrayEvenInternalByteOrder(148393984l);
         //52565751575156524948
         
-        System.out.println(decToHex(89999l));
-        System.out.println(decToHexInternalByteOrder(89999l));
+        System.out.println("decToHex(89999l) \t\t\t" + decToHex(89999l));
+        System.out.println("decToHexInternalByteOrder(89999l) \t" + decToHexInternalByteOrder(89999l));
         
         for(int i=0; i<reverse.length; i++)
             System.out.print(reverse[i]);
         
-        System.out.println(hexToDec("015f8f"));
-        System.out.println(hexToDec("8f5f01"));
+        System.out.println();
+        System.out.println("hexToDec(015f8f) \t\t=" + hexToDec("015f8f"));
+        System.out.println("hexToDec(8f5f01) \t\t=" + hexToDec("8f5f01"));
+        
+        System.out.println();
+        System.out.println("hexToDecInternalByteOrder(015f8f)= \t\t" + hexToDecInternalByteOrder("015f8f"));
+        System.out.println("hexToDecInternalByteOrder(8f5f01)= \t\t" + hexToDecInternalByteOrder("8f5f01"));
+        
+        byte[] num = decToByteArrayEven(1483939849l);
+        System.out.println(byteArrayEvenToDec(num));
+        
+        System.out.println();
+        num = decToByteArrayEvenInternalByteOrder(1483939849l);
+        System.out.println(byteArrayEvenToDecInternalByteOrder(num));
     }
 
 }

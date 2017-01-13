@@ -30,10 +30,27 @@ public class runTestB {
         
         byte[] num = decToByteArrayEven(1483939849l);
         System.out.println(byteArrayEvenToDec(num));
+        System.out.println(toStringByteArray(num, 'I', ":"));
         
         System.out.println();
         num = decToByteArrayEvenInternalByteOrder(1483939849l);
         System.out.println(byteArrayEvenToDecInternalByteOrder(num));
+        
+        System.out.println(toStringByteArray(num, 'I', ""));
+        System.out.println(toStringByteArray(num, 'B', ":"));
+        System.out.println(toStringByteArray(num, 'C', "."));
+        
+        System.out.println();
+        byte[] fill = new byte[]{62};
+        byte[] refill = zeroFillByteArray(fill, 5, 'e');
+        System.out.println(toStringByteArray(refill, 'b', ","));
+        System.out.println(toStringByteArray(refill, 'c', ","));
+        refill = zeroFillByteArray(fill, 5, 'd');
+        refill[1]++;
+        System.out.println(toStringByteArray(refill, 'b', ","));
+        System.out.println(toStringByteArray(refill, 'c', ","));
+        
+        
     }
 
 }

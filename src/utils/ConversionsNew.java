@@ -117,7 +117,7 @@ public class ConversionsNew {
             swap = "" + (char)bytes[i] + swap;
         
         for(int i=0; i<swap.length()-1; i=i+2){
-            swap2 = String.valueOf(swap.charAt(i)) + String.valueOf(swap.charAt(i+1)) + swap2;
+            swap2 = String.valueOf(swap.charAt(i+1)) + String.valueOf(swap.charAt(i)) + swap2;
         }
         
         return Long.parseLong(swap2);
@@ -142,6 +142,58 @@ public class ConversionsNew {
         return ret;
     }
     
-
-
+    public static String toStringByteArray(byte[] bytes, char showAs, String separator){
+        StringBuffer ret = new StringBuffer();
+        
+        switch(showAs){
+        case 'i':
+        case 'I':
+            for(byte byt : bytes)
+//                ret.append(Integer.toString((byt & 0xff) + 0x100, 10).substring(1) + "."); // original
+                ret.append(((int)(byt & 0xff)) +  separator); // original
+        break;
+        case 'b':
+        case 'B':
+            for(byte byt : bytes)
+//                ret.append(Integer.toString((byt & 0xff) + 0x100, 10).substring(1) + "."); // original
+                ret.append(((byte)(byt & 0xff)) + separator); // original
+        break;
+        case 'c':
+        case 'C':
+            for(byte byt : bytes)
+//                ret.append(Integer.toString((byt & 0xff) + 0x100, 10).substring(1) + "."); // original
+                ret.append(((char)(byt & 0xff)) + separator); // original
+        break;
+        }
+        
+        return ret.toString().substring(0, ret.length()-1);
+    }
+    
+    public static byte[] zeroFillByteArray(byte[] bytes, int qty, char pos){
+        byte[] formatted = new byte[bytes.length+qty];
+        int len = bytes.length;
+        
+        switch(pos){
+        case 'e':
+        case 'E':
+        case 'l':
+        case 'L':
+            for(int i=0; i<qty; i++)
+                formatted[i] = 48;
+            for(int i=qty, l=0; i<formatted.length; i++, l++)
+                formatted[i] = bytes[l];
+            break;
+        case 'd':
+        case 'D':
+        case 'r':
+        case 'R':
+            for(int i=0, l=0; i<len; i++, l++)
+                formatted[i] = bytes[i];
+            for(int i=len; i<qty; i++)
+                formatted[i] = 48;
+            break;
+        }
+        
+        return formatted;
+    }
 }

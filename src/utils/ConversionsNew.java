@@ -169,6 +169,13 @@ public class ConversionsNew {
         return ret.toString().substring(0, ret.length()-1);
     }
     
+    /*****
+     * 
+     * @param bytes
+     * @param qty
+     * @param pos
+     * @return byte[] / 
+     */
     public static byte[] zeroFillByteArray(byte[] bytes, int qty, char pos){
         byte[] formatted = new byte[bytes.length+qty];
         int len = bytes.length;

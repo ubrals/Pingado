@@ -128,6 +128,14 @@ public class Transaction {
         private Input(){
         }
         
+        /*****
+         * 
+         * @param previousOutpointHash
+         * @param previousOutpointIndex
+         * @param scriptBytes
+         * @param scriptSig
+         * 
+         */
         private Input(byte[] previousOutpointHash, byte[] previousOutpointIndex, byte[] scriptBytes, byte[] scriptSig){
             this.setPreviousOutpointHash(previousOutpointHash);
             this.setPreviousOutpointIndex(previousOutpointIndex);

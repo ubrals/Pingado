@@ -38,14 +38,17 @@ public class ConversionsNew {
         long ret = 0l;
         String rev = "";
         
+        System.out.println(">>>hexToDecInternalByteOrder:num:=" + num + " len=" + len);
         for(int r=0; r<len-1; r+=2){
             rev = String.valueOf((char)num.charAt(r)) + String.valueOf((char)num.charAt(r+1)) + rev;
+//            System.out.println("hexToDecInternalByteOrder:rev:=" + rev);
         }
-        while(rev.charAt(0) == '0' && rev.length() != 1){
+        while(!Character.isLetterOrDigit(rev.charAt(0)) && rev.length() != 1){
             rev = rev.substring(1, rev.length());
         }
         
         ret = Long.parseUnsignedLong(rev, 16);
+        System.out.println("hexToDecInternalByteOrder:ret:=" + ret);
         return ret;
     }
 

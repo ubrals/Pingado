@@ -18,7 +18,7 @@ public class runTestA {
                     , getSha256InternalByteOrder("tx0_scriptSig", 32)
                     , tx0.getTxid()
                     , getSha256InternalByteOrder("tx0_in", 16));
-        System.out.println(tx0.toMakeHash());
+        System.out.println("tx0.toMakeHash:"+tx0.toMakeHash());
         
         
         Transaction tx1;

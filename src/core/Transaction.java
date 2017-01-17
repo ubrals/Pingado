@@ -3,7 +3,9 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.Conversions;
+import utils.ConversionsNew;
+
+//import utils.Conversions;
 import static utils.Conversions.*;
 
 //import core.Merkle.Header.Input;
@@ -53,15 +55,15 @@ public class Transaction {
         }
         
         private void incrementTx_in_count() {
-            System.out.println(hexToDecInternalByteOrder(byteToString(tx_in_count)));
-            long counter = hexToDecInternalByteOrder(byteToString(tx_in_count));
+            System.out.println("***>incrementTx_in_count:tx_in_count:="+ConversionsNew.hexToDecInternalByteOrder(byteToString(tx_in_count)));
+            long counter = ConversionsNew.byteArrayEvenToDecInternalByteOrder(tx_in_count);
             counter++;
-//            System.out.println(counter);
+            System.out.println("incrementTx_in_count:counter:="+counter);
 //            if(counter%10 == counter) // TODO: completar bytes nulos
 //                counter=10+counter;
             
-            tx_in_count = decToHexInternalByteOrderArray(counter);
-//            System.out.println(byteToString(tx_in_count));
+            tx_in_count = ConversionsNew.decToByteArrayEvenInternalByteOrder(counter);
+            System.out.println("<<**incrementTx_in_count:tx_in_count:="+byteToString(tx_in_count));
 //            System.out.println(hexToDecInternalByteOrder(byteToString(tx_in_count)));
         }
         
@@ -193,10 +195,10 @@ public class Transaction {
         }
         
         private String toMakeHash(){
-            return Conversions.byteToString(this.getPreviousOutpointHash())
-                 + Conversions.byteToString(this.getPreviousOutpointIndex())
-                 + Conversions.byteToString(this.getScriptSig())
-                 + Conversions.byteToString(this.getSequenceNumber());
+            return byteToString(this.getPreviousOutpointHash())
+                 + byteToString(this.getPreviousOutpointIndex())
+                 + byteToString(this.getScriptSig())
+                 + byteToString(this.getSequenceNumber());
         }
     }
 
@@ -280,13 +282,49 @@ public class Transaction {
     }
     
     public void addTx_in(String s_satoshis, String pubkeyScriptSig, String txid, String scriptSig){
-        Input tx_in = new Input(Conversions.stringToByte(s_satoshis)
-                              , Conversions.stringToByte(pubkeyScriptSig)
-                              , Conversions.stringToByte(txid)
-                              , Conversions.stringToByte(scriptSig));
+        Input tx_in = new Input(stringToByte(s_satoshis)
+                              , stringToByte(pubkeyScriptSig)
+                              , stringToByte(txid)
+                              , stringToByte(scriptSig));
         this.tx_in.add(tx_in);
         this.getHeader().incrementTx_in_count();
+        System.out.println();
         this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
+        this.getHeader().incrementTx_in_count();
+        System.out.println();
         this.getHeader().incrementTx_in_count();
     }
     

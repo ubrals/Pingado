@@ -281,6 +281,15 @@ public class Transaction {
         return txscontents;
     }
     
+    public void addTx_in2(byte[] s_satoshis, byte[] pubkeyScriptSig, byte[] txid, byte[] scriptSig){
+        Input tx_in = new Input(s_satoshis
+                              , pubkeyScriptSig
+                              , txid
+                              , scriptSig);
+        this.tx_in.add(tx_in);
+        this.getHeader().incrementTx_in_count();
+    }
+    
     public void addTx_in(String s_satoshis, String pubkeyScriptSig, String txid, String scriptSig){
         Input tx_in = new Input(stringToByte(s_satoshis)
                               , stringToByte(pubkeyScriptSig)

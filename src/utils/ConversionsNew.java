@@ -126,6 +126,15 @@ public class ConversionsNew {
         return Long.parseLong(swap2);
     }
     
+    public static byte[] stringToByteArray(String str){
+        byte bytes[] = new byte[str.length()];
+        
+        for(int i=0; i<str.length(); i++){
+            bytes[i] = (byte) str.charAt(i);
+        }
+        return bytes;
+    }
+
     public static String right(String word, int count){
         String ret = "";
         int len = word.length();

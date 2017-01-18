@@ -1,4 +1,5 @@
 import core.Transaction;
+import utils.ConversionsNew;
 
 import static utils.Coinbase.generateCoinbase;
 import static utils.Sha.getSha256InternalByteOrder;
@@ -18,8 +19,11 @@ public class runTestA {
                     , getSha256InternalByteOrder("tx0_scriptSig", 32)
                     , tx0.getTxid()
                     , getSha256InternalByteOrder("tx0_in", 16));
-        System.out.println("tx0.toMakeHash:"+tx0.toMakeHash());
-        
+        //System.out.println("tx0.toMakeHash:"+tx0.toMakeHash());
+        tx0.addTx_in2(zeroFillByteArray(new byte[]{49}, 8, 'r')
+                    , stringToByteArray(getSha256InternalByteOrder("tx0_scriptSig", 32))
+                    , stringToByteArray(tx0.getTxid())
+                    , stringToByteArray(getSha256InternalByteOrder("tx0_in", 16)));
         
         Transaction tx1;
         tx1 = new Transaction();

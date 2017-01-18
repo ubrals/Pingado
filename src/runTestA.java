@@ -23,6 +23,7 @@ public class runTestA {
         
         Transaction tx1;
         tx1 = new Transaction();
+        tx1.setCoinbase(zeroFillByteArray(new byte[]{48, 48, 52},  6, 'r'));
         
         tx1.setCoinbase(null);
         

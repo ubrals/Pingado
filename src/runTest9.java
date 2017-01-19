@@ -10,7 +10,7 @@ public class runTest9 {
         
         transaction0.setCoinbase(generateCoinbase());
         transaction0.setSatoshis(new byte[]{(byte)49});
-        transaction0.setTxid("transaction0_id");
+//        transaction0.setTxid("transaction0_id");
         transaction0.addTx_in("1.0", "transaction0_pubkeyScriptSig", "txid", "scriptSig");
 
         System.out.print  ("Satoshis: " + left(String.valueOf(hexToDecInternalByteOrder("f0ca052a01000000")), 2) + ".");

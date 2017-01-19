@@ -22,7 +22,7 @@ public class runTest7 {
 		byte coinbase[] = new byte[100];
 		coinbase = generateCoinbase();
 		String hash_trx1 = getSha256(getSha256("transaction1", 64), 64);
-		transaction1 = new Transaction(hash_trx1, satoshis_trx1);
+		transaction1 = new Transaction();
 		transaction1.setCoinbase(coinbase);
 		
 		String hash_merkle = getSha256(getSha256("merkle_root_a", 64), 64);

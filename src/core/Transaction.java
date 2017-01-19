@@ -3,10 +3,10 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.ConversionsNew;
+import static utils.ConversionsNew.*;
 
 //import utils.Conversions;
-import static utils.Conversions.*;
+//import static utils.Conversions.*;
 
 //import core.Merkle.Header.Input;
 //import core.Merkle.Header.Output;
@@ -55,15 +55,15 @@ public class Transaction {
         }
         
         private void incrementTx_in_count() {
-            System.out.println("***>incrementTx_in_count:tx_in_count:="+ConversionsNew.hexToDecInternalByteOrder(byteToString(tx_in_count)));
-            long counter = ConversionsNew.byteArrayEvenToDecInternalByteOrder(tx_in_count);
+//            System.out.println("***>incrementTx_in_count:tx_in_count:="+ConversionsNew.hexToDecInternalByteOrder(byteToString(tx_in_count)));
+            long counter = byteArrayEvenToDecInternalByteOrder(tx_in_count);
             counter++;
-            System.out.println("incrementTx_in_count:counter:="+counter);
+//            System.out.println("incrementTx_in_count:counter:="+counter);
 //            if(counter%10 == counter) // TODO: completar bytes nulos
 //                counter=10+counter;
             
-            tx_in_count = ConversionsNew.decToByteArrayEvenInternalByteOrder(counter);
-            System.out.println("<<**incrementTx_in_count:tx_in_count:="+byteToString(tx_in_count));
+            tx_in_count = decToByteArrayEvenInternalByteOrder(counter);
+//            System.out.println("<<**incrementTx_in_count:tx_in_count:="+byteToString(tx_in_count));
 //            System.out.println(hexToDecInternalByteOrder(byteToString(tx_in_count)));
         }
         
@@ -72,9 +72,9 @@ public class Transaction {
         }
         
         private void incrementTx_out_count() {
-            long counter = Long.valueOf(byteToString(tx_out_count));
+            long counter = byteArrayEvenToDecInternalByteOrder(tx_out_count);
             counter++;
-            tx_out_count = decToHexInternalByteOrderArray(counter);
+            tx_out_count = decToByteArrayEvenInternalByteOrder(counter);
         }
         
         private byte[] getLock_time() {
@@ -87,10 +87,10 @@ public class Transaction {
         
         private String toMakeHash(){
             String ret;
-            ret =  byteToString(this.getVersion());
-            ret += byteToString(this.getTx_in_count());
-            ret += String.valueOf(this.getTx_out_count());
-            ret += byteToString(this.getLock_time());
+            ret =  toStringByteArray(this.getVersion(), 'c', "");
+            ret += toStringByteArray(this.getTx_in_count(), 'c', "");
+            ret += toStringByteArray(this.getTx_out_count(), 'c', "");
+            ret += toStringByteArray(this.getLock_time(), 'c', "");
             
             return ret;
         }
@@ -195,10 +195,10 @@ public class Transaction {
         }
         
         private String toMakeHash(){
-            return byteToString(this.getPreviousOutpointHash())
-                 + byteToString(this.getPreviousOutpointIndex())
-                 + byteToString(this.getScriptSig())
-                 + byteToString(this.getSequenceNumber());
+            return toStringByteArray(this.getPreviousOutpointHash(), 'c', "")
+                 + toStringByteArray(this.getPreviousOutpointIndex(), 'c', "")
+                 + toStringByteArray(this.getScriptSig(), 'c', "")
+                 + toStringByteArray(this.getSequenceNumber(), 'c', "");
         }
     }
 
@@ -233,14 +233,15 @@ public class Transaction {
         }
         
         private String toMakeHash(){
-            return byteToString(this.getSatoshis()) + byteToString(this.getScriptPubKey());
+            return toStringByteArray(this.getSatoshis(), 'c', "")
+                 + toStringByteArray(this.getScriptPubKey(), 'c', "");
         }
     }
 
     private Header header;
-    private String txid;
+    private byte[] txid;
     private byte[] satoshis = new byte[16];
-    private byte coinbase[] = new byte[100];
+    private byte[] coinbase = new byte[100];
     private List<Input> tx_in = new ArrayList<Input>();
     private List<Output> tx_out = new ArrayList<Output>();
     
@@ -250,7 +251,7 @@ public class Transaction {
         satoshis = new byte[]{48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48};
     }
     
-    public Transaction(String txid, byte satoshis[]){
+    public Transaction(byte[] txid, byte[] satoshis){
         this.setTxid(txid);
         this.setSatoshis(satoshis);
     }
@@ -291,49 +292,11 @@ public class Transaction {
     }
     
     public void addTx_in(String s_satoshis, String pubkeyScriptSig, String txid, String scriptSig){
-        Input tx_in = new Input(stringToByte(s_satoshis)
-                              , stringToByte(pubkeyScriptSig)
-                              , stringToByte(txid)
-                              , stringToByte(scriptSig));
+        Input tx_in = new Input(stringToByteArray(s_satoshis)
+                              , stringToByteArray(pubkeyScriptSig)
+                              , stringToByteArray(txid)
+                              , stringToByteArray(scriptSig));
         this.tx_in.add(tx_in);
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
-        this.getHeader().incrementTx_in_count();
-        System.out.println();
         this.getHeader().incrementTx_in_count();
     }
     
@@ -351,20 +314,20 @@ public class Transaction {
         return txscontents;
     }
     
-    public void addTx_out(String satoshis, String scriptPubKey){
+    public void addTx_out(byte[] satoshis, byte[] scriptPubKey){
         Output tx_out = new Output();
-        tx_out = new Output(stringToByte(satoshis)
-                          , stringToByte(scriptPubKey));
+        tx_out = new Output(satoshis
+                          , scriptPubKey);
         
         this.tx_out.add(tx_out);
         this.getHeader().incrementTx_out_count();
     }
     
-    public String getTxid() {
+    public byte[] getTxid() {
         return txid;
     }
     
-    public void setTxid(String txid) {
+    public void setTxid(byte[] txid) {
         this.txid = txid;
     }
     
@@ -385,12 +348,12 @@ public class Transaction {
     }
     
     public String toMakeHash(){
-        String ret = this.getTxid() + printLongWithDecimals(byteToString(this.getSatoshis()))
-                   + intArrayToString(byteToIntArray(this.getCoinbase())) + "  ___ + ____ "
+        String ret = this.getTxid() + toStringByteArray(this.getSatoshis(), 'c', "")
+                   + toStringByteArray(this.getCoinbase(), 'i', "") + "  ___ + ____ "
                    + this.getHeader().toMakeHash();
         //for(int i=0; i<tx_in.size(); i++)
-        String smax = byteToString(this.getHeader().getTx_in_count());
-        System.out.println(":" + byteToString(this.getHeader().getTx_in_count()) + ":" + smax.length());
+        String smax = toStringByteArray(this.getHeader().getTx_in_count(), 'c', "");
+        System.out.println(":" + toStringByteArray(this.getHeader().getTx_in_count(), 'c', "") + ":" + smax.length());
         long lmax = Long.valueOf(right(smax, smax.length()-1));
         int imax = (int)(lmax);
         System.out.println(":" + imax + ":");
@@ -399,7 +362,7 @@ public class Transaction {
         for(int i=0; i<imax; i++)
             ret += tx_in.get(i).toMakeHash();
         //for(int o=0; o<tx_out.size(); o++)
-        for(int o=0; o<Integer.valueOf(byteToString(this.getHeader().getTx_in_count())); o++)
+        for(int o=0; o<Integer.valueOf(toStringByteArray(this.getHeader().getTx_in_count(), 'i', "")); o++)
             ret += tx_out.get(o).toMakeHash();
 
         return ret;

@@ -1,12 +1,12 @@
-import core.Transaction;
-
 import static utils.Coinbase.generateCoinbase;
 import static utils.Conversions.*;
+
+import core.deprecated.Transaction_bytes_e_resto;
 public class runTest9 {
 
     public static void main(String[] args) {
-        Transaction transaction0;
-        transaction0 = new Transaction();
+        Transaction_bytes_e_resto transaction0;
+        transaction0 = new Transaction_bytes_e_resto();
         
         transaction0.setCoinbase(generateCoinbase());
         transaction0.setSatoshis(new byte[]{(byte)49});

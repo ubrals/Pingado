@@ -1,15 +1,17 @@
-import core.Transaction;
 import utils.Sha;
 
 import static utils.Coinbase.generateCoinbase;
 import static utils.Sha.getSha256InternalByteOrder;
+
+import core.deprecated.Transaction_bytes_e_resto;
+
 import static utils.ConversionsNew.*;
 
 public class runTestA {
 
     public static void main(String[] args) {
-        Transaction tx0;
-        tx0 = new Transaction();
+        Transaction_bytes_e_resto tx0;
+        tx0 = new Transaction_bytes_e_resto();
         
         tx0.setCoinbase(generateCoinbase());
         tx0.setSatoshis(zeroFillByteArray(new byte[]{49}, 8, 'r'));
@@ -26,8 +28,8 @@ public class runTestA {
                     , stringToByteArray(getSha256InternalByteOrder("tx0_in", 16)));
         
         
-        Transaction tx1;
-        tx1 = new Transaction();
+        Transaction_bytes_e_resto tx1;
+        tx1 = new Transaction_bytes_e_resto();
         tx1.setCoinbase(null);
         tx1.setSatoshis(new byte[]{48, 48, 48, 49, 53, 52, 48, 48, 48});
         tx1.setTxid(stringToByteArray(Sha.getSha256InternalByteOrder(toStringByteArray(tx0.getTxid(),'c', ""), 32)));

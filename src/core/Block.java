@@ -1,6 +1,10 @@
 package core;
 
 import static utils.Sha.getSha256;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static utils.Conversions.*;
 
 public class Block {
@@ -98,6 +102,8 @@ public class Block {
 	private Header header;
 	private byte[] hash = new byte[32];
 	private Block previousBlock;
+    private List<Transaction> transactions = new ArrayList<Transaction>();
+
 	
 	/*****
 	 * Default constructor
@@ -122,6 +128,11 @@ public class Block {
 		this.hash = makeHash();
 		this.previousBlock = previousBlock;
 	}
+	
+	public void addTransaction(Transaction transaction){
+	    transactions.add(transaction);
+	}
+	
     private byte[] makeHash(){
         String concatHeader = byteToString(header.getVersion())
                             + byteToString(header.getPreviousBlockHash())

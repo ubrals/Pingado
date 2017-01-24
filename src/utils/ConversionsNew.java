@@ -38,7 +38,7 @@ public class ConversionsNew {
         long ret = 0l;
         String rev = "";
         
-        System.out.println(">>>hexToDecInternalByteOrder:num:=" + num + " len=" + len);
+//        System.out.println(">>>hexToDecInternalByteOrder:num:=" + num + " len=" + len);
         for(int r=0; r<len-1; r+=2){
             rev = String.valueOf((char)num.charAt(r)) + String.valueOf((char)num.charAt(r+1)) + rev;
 //            System.out.println("hexToDecInternalByteOrder:rev:=" + rev);
@@ -48,7 +48,7 @@ public class ConversionsNew {
         }
         
         ret = Long.parseUnsignedLong(rev, 16);
-        System.out.println("hexToDecInternalByteOrder:ret:=" + ret);
+//        System.out.println("hexToDecInternalByteOrder:ret:=" + ret);
         return ret;
     }
 
@@ -178,7 +178,7 @@ public class ConversionsNew {
         break;
         }
         
-        return ret.toString().substring(0, ret.length()-1);
+        return ret.toString().substring(0, ret.length());
     }
     
     /*****

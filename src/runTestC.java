@@ -10,8 +10,15 @@ import static utils.ConversionsNew.*;
 public class runTestC {
     
     public static void main(String[] args) {
+    /***
+     * Transaction 0: coinbase generation
+     */
         Transaction tx0 = coinbaseTransaction();
         Transaction tx1;
+        
+    /***
+     * Transaction 1
+     */
         String s_txid1 = "transaction id 1";
         long l_satoshis = 1275309003l;
         String pubKey;

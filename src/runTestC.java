@@ -53,6 +53,9 @@ public class runTestC {
                         Sha.getSha256InternalByteOrder("transaction id coinbase", 32)
                       )
                     );
+        txcb.addTx_in(txcb.getSatoshis(), stringToByteArray("83b7c09cef738a"), txcb.getTxid(), stringToByteArray("12bc7e4a2cb2"));
+//        txcb.addTx_out(satoshis, scriptPubKey);
+//        txcb.
         return txcb;
     }
 

@@ -268,13 +268,14 @@ public class Transaction {
         return txscontents;
     }
     
-    public void addTx_in(byte[] s_satoshis, byte[] pubkeyScriptSig, byte[] txid, byte[] scriptSig){
+    public Input addTx_in(byte[] s_satoshis, byte[] pubkeyScriptSig, byte[] txid, byte[] scriptSig){
         Input tx_in = new Input(s_satoshis
                               , pubkeyScriptSig
                               , txid
                               , scriptSig);
         this.tx_in.add(tx_in);
         this.getHeader().incrementTx_in_count();
+        return tx_in;
     }
     
     public byte[] getTx_out_count(){
@@ -291,13 +292,14 @@ public class Transaction {
         return txscontents;
     }
     
-    public void addTx_out(byte[] satoshis, byte[] scriptPubKey){
+    public Output addTx_out(byte[] satoshis, byte[] scriptPubKey){
         Output tx_out = new Output();
         tx_out = new Output(satoshis
                           , scriptPubKey);
         
         this.tx_out.add(tx_out);
         this.getHeader().incrementTx_out_count();
+        return tx_out;
     }
     
     public byte[] getTxid() {
